@@ -1,20 +1,27 @@
 {
-  "name": "valorstats",
+  "name": "albumvoo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
-    "start": "tsc && node build/server.js"
+    "start": "ts-node server/server.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "@types/express": "^4.17.7",
+    "@types/morgan": "^1.9.1",
     "@types/node": "^14.0.27",
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "qs": "^6.9.4",
     "typescript": "^3.9.7"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
   }
 }

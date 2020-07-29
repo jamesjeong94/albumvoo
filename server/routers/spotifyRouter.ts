@@ -1,8 +1,13 @@
 import express = require('express');
-import matchesController = require('../controllers/spotifyController');
+import authRouter from './authRouter';
+import spotifyController = require('../controllers/spotifyController');
 
 const router = express.Router();
 
-router.get('/', matchesController.getMatches);
+router.use('/auth', authRouter);
+
+router.get('/', spotifyController.getMatches);
+
+router;
 
 export = router;
