@@ -2,30 +2,29 @@ import express from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 import spotifyRouter from './routers/spotifyRouter';
 import authChecker from './middleware/authChecker';
+import cors from 'cors';
 
 dotenv.config();
 
 const app: express.Application = express();
+
 const PORT: string | number = process.env.PORT || 3000;
+const HOST: string = process.env.HOST || 'http://localhost:3000';
 
 const publicDir = express.static(path.resolve(__dirname, '../client/public'));
 
-app.use(morgan('combined'));
+app.use(morgan('combined')).use(cors()).use(cookieParser());
 app.use('/spotify', spotifyRouter);
-// app.use(publicDir);
+app.use(authChecker);
+app.use(publicDir);
 
-app.get('/', authChecker, (req, res) => {
-  console.log('is this workin');
-  // console.log(req);
-  res.sendFile(path.resolve(__dirname, '../client/public/index.html'));
-});
+app.get('/', (req, res) => {});
 
 app.get('/main', (req, res) => {
-  // console.log(req);
-  // console.log(res);
-  res.redirect('http://localhost:3000');
+  res.redirect(HOST);
 });
 
 app.listen(PORT, () => {

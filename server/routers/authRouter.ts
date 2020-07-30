@@ -9,8 +9,9 @@ const router = express.Router();
 
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const HOST = process.env.HOST;
 
-const redirect_uri: string = 'http://localhost:3000/spotify/auth/redirect';
+const redirect_uri: string = `${HOST}/spotify/auth/redirect`;
 
 router.get('/login', (req, res) => {
   var scopes = 'user-read-private user-read-email';
@@ -43,17 +44,18 @@ router.get('/redirect', (req, res) => {
     },
   })
     .then(({ data }) => {
-      console.log(data);
-      res.cookie('access_token', data.access_token, {
-        maxAge: data.expires_in,
-      });
-      res.cookie('refresh_token', data.refresh_token, {
-        maxAge: data.expires_in,
-      });
-      res.redirect('http://localhost:3000/main');
+      res
+        .cookie('access_token', data.access_token, {
+          maxAge: data.expires_in,
+        })
+        .cookie('refresh_token', data.refresh_token, {
+          maxAge: data.expires_in,
+        })
+        .redirect(`${HOST}/main`);
     })
     .catch((err) => {
       console.log(err);
+      res.redirect(`${HOST}/login`);
     });
 });
 
