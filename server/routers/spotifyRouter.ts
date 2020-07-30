@@ -8,6 +8,4 @@ router.use('/auth', authRouter);
 
 router.get('/', spotifyController.getMatches);
 
-router;
-
 export = router;
