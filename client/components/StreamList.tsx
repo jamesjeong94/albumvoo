@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import StreamRow from './StreamRow';
 
 interface StreamListProps {
   items: any[];
@@ -15,9 +16,8 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
   const streamRows = items.map((item) => {
     return (
       <div>
-        <p>
-          {item.name} {item.artists[0].name} {item.release_date}
-        </p>
+        <StreamRow item={item}></StreamRow>
+        <p></p>
       </div>
     );
   });

@@ -1,11 +1,13 @@
 import React from 'react';
 
-interface StreamRowProps {}
+interface StreamRowProps {
+  item: any;
+}
 
-const StreamRow: React.FC<StreamRowProps> = ({}) => {
+const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
   return (
     <div>
-      <p>streamrow</p>
+      {item.name} {item.artists[0].name} {item.release_date}
     </div>
   );
 };

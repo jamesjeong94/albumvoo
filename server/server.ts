@@ -16,7 +16,10 @@ const HOST: string = process.env.HOST || 'http://localhost:3000';
 
 const publicDir = express.static(path.resolve(__dirname, '../client/public'));
 
-app.use(morgan('combined')).use(cors()).use(cookieParser());
+app
+  .use(morgan('combined'))
+  .use(cors({ origin: true }))
+  .use(cookieParser());
 app.use('/spotify', spotifyRouter);
 app.use(authChecker);
 app.use(publicDir);

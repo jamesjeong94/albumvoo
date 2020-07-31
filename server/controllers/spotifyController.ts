@@ -58,6 +58,7 @@ export = {
           headers: generateAuthHeader({}, req.cookies),
         }).then(({ data }) => data.items);
       });
+      let prev: any;
       axios
         .all(artists)
         .then((data: any) => {
@@ -68,7 +69,9 @@ export = {
               return acc;
             }, [])
             .filter((item: any) => {
-              return item.album_group !== 'appears_on';
+              let arePrevAndCurrSame = prev === item.name;
+              prev = item.name;
+              return item.album_group !== 'appears_on' && !arePrevAndCurrSame;
             })
             .sort((a: any, b: any) => {
               return (
