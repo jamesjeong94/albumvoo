@@ -4,8 +4,9 @@ import axios from 'axios';
 import ItemList from './components/ItemList';
 
 const App: React.FC = () => {
-  let [userInfo, setUserInfo] = useState<Object>({ user: null });
-  let [topArtists, setTopArtists] = useState<any[]>([]);
+  const [userInfo, setUserInfo] = useState<Object>({ user: null });
+  const [topArtists, setTopArtists] = useState<any[]>([]);
+  const [recentAlbums, setRecentAlbums] = useState<any[]>([]);
 
   const getUserData = () => {
     axios({
@@ -26,6 +27,16 @@ const App: React.FC = () => {
     });
   };
 
+  const getRecentByTopArtists = () => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:3000/spotify/recent',
+    }).then(({ data }) => {
+      console.log(data);
+      setRecentAlbums(data.items);
+    });
+  };
+
   return (
     <div>
       <h1>hi</h1>
@@ -37,6 +48,7 @@ const App: React.FC = () => {
       >
         Get Top
       </button>
+      <button onClick={getRecentByTopArtists}>Get Recent</button>
       <ItemList items={topArtists} />
     </div>
   );

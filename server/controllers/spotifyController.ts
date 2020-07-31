@@ -38,8 +38,22 @@ export = {
         res.send(data);
       })
       .catch((err) => {
-        console.log('Need to reauth');
+        if (err.response.status === 401) {
+          res.redirect(`${HOST}/spotify/auth/refresh`);
+        }
         // res.redirect(`${HOST}/spotify/auth/login`);
       });
+  },
+  getRecentByTopArtists: (req: any, res: any) => {
+    return axios({
+      method: 'get',
+      url: `https://api.spotify.com/v1/me/top/artists`,
+      headers: generateAuthHeader({}, req.cookies),
+    }).then(({ data }) => {
+      const artists = data.items.map((artist: any) => {
+        return { id: artist.id, name: artist.name };
+      });
+      res.send(artists);
+    });
   },
 };
