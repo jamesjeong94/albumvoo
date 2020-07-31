@@ -51,9 +51,33 @@ export = {
       headers: generateAuthHeader({}, req.cookies),
     }).then(({ data }) => {
       const artists = data.items.map((artist: any) => {
-        return { id: artist.id, name: artist.name };
+        let endPt = `https://api.spotify.com/v1/artists/${artist.id}/albums`;
+        return axios({
+          method: 'get',
+          url: endPt,
+          headers: generateAuthHeader({}, req.cookies),
+        }).then(({ data }) => data.items);
       });
-      res.send(artists);
+      axios
+        .all(artists)
+        .then((data: any) => {
+          // console.log(data[0]);
+          let formattedData = data
+            .reduce((acc: any[], curr: any[]) => {
+              acc.push(...curr);
+              return acc;
+            }, [])
+            .sort((a: any, b: any) => {
+              return (
+                new Date(b.release_date).getTime() -
+                new Date(a.release_date).getTime()
+              );
+            });
+          res.send(formattedData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   },
 };

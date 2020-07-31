@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ItemList from './components/ItemList';
+import StreamList from './components/StreamList';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
@@ -32,7 +33,6 @@ const App: React.FC = () => {
       method: 'get',
       url: 'http://localhost:3000/spotify/recent',
     }).then(({ data }) => {
-      console.log(data);
       setRecentAlbums(data.items);
     });
   };
@@ -50,6 +50,7 @@ const App: React.FC = () => {
       </button>
       <button onClick={getRecentByTopArtists}>Get Recent</button>
       <ItemList items={topArtists} />
+      <StreamList items={recentAlbums} />
     </div>
   );
 };

@@ -56,7 +56,6 @@ export = {
       });
   },
   refreshToken: (req: any, res: any) => {
-    console.log('refresh', req.cookies);
     const code: any = req.query.code;
     axios({
       method: 'POST',
