@@ -67,6 +67,9 @@ export = {
               acc.push(...curr);
               return acc;
             }, [])
+            .filter((item: any) => {
+              return item.album_group !== 'appears_on';
+            })
             .sort((a: any, b: any) => {
               return (
                 new Date(b.release_date).getTime() -

@@ -33,7 +33,7 @@ const App: React.FC = () => {
       method: 'get',
       url: 'http://localhost:3000/spotify/recent',
     }).then(({ data }) => {
-      setRecentAlbums(data.items);
+      setRecentAlbums(data);
     });
   };
 
