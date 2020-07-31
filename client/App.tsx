@@ -1,37 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const App = () => {
-  let [userInfo, setUserInfo] = useState({ user: null });
+import ItemList from './components/ItemList';
+
+const App: React.FC = () => {
+  let [userInfo, setUserInfo] = useState<Object>({ user: null });
+  let [topArtists, setTopArtists] = useState<any[]>([]);
+
   const getUserData = () => {
     axios({
       method: 'get',
       url: 'http://localhost:3000/spotify/user',
     }).then(({ data }) => {
-      console.log(data);
       setUserInfo(data);
     });
   };
+
   const getTopOfUser = (type: string) => {
     axios({
       method: 'get',
       url: 'http://localhost:3000/spotify/top',
       params: { type: type },
     }).then(({ data }) => {
-      console.log(data);
+      setTopArtists(data.items);
     });
   };
+
   return (
     <div>
       <h1>hi</h1>
       <button onClick={getUserData}>Get User Data</button>
       <button
         onClick={() => {
-          getTopOfUser('track');
+          getTopOfUser('artists');
         }}
       >
-        Get Top Tracks
+        Get Top
       </button>
+      <ItemList items={topArtists} />
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const HOST = process.env.HOST;
+
 const generateAuthHeader = (header = {}, cookies: any) => {
   return { ...header, Authorization: `Bearer ${cookies.access_token}` };
 };
@@ -18,14 +20,15 @@ export = {
       .then(({ data }) => {
         res.send(data);
       })
-      .catch(handleError);
+      .catch(() => {
+        console.log('Need to reauth');
+      });
   },
   getPlaylists: (req: any, res: any) => {
     return axios({});
   },
   getTopOfUser: (req: any, res: any) => {
     let type = req.query.type;
-    console.log(req.query.type);
     return axios({
       method: 'get',
       url: `https://api.spotify.com/v1/me/top/${type}`,
@@ -34,6 +37,9 @@ export = {
       .then(({ data }) => {
         res.send(data);
       })
-      .catch(handleError);
+      .catch((err) => {
+        console.log('Need to reauth');
+        // res.redirect(`${HOST}/spotify/auth/login`);
+      });
   },
 };

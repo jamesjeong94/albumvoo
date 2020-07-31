@@ -14,7 +14,7 @@ const HOST = process.env.HOST;
 const redirect_uri: string = `${HOST}/spotify/auth/redirect`;
 
 router.get('/login', (req, res) => {
-  var scopes = 'user-read-private user-read-email';
+  var scopes = 'user-read-private user-read-email user-top-read';
   res.redirect(
     'https://accounts.spotify.com/authorize' +
       '?response_type=code' +
@@ -54,8 +54,8 @@ router.get('/redirect', (req, res) => {
         .redirect(`${HOST}/main`);
     })
     .catch((err) => {
-      console.log(err);
-      res.redirect(`${HOST}/login`);
+      // console.log(err);
+      res.redirect(`${HOST}/spotify/authlogin`);
     });
 });
 
