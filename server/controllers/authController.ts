@@ -12,7 +12,7 @@ const redirect_uri: string = `${HOST}/spotify/auth/redirect`;
 
 export = {
   loginUser: (req: any, res: any) => {
-    var scopes = 'user-read-private user-read-email user-top-read';
+    const scopes = 'user-read-private user-read-email user-top-read';
     res.redirect(
       'https://accounts.spotify.com/authorize' +
         '?response_type=code' +
@@ -51,7 +51,6 @@ export = {
           .redirect(`${HOST}/main`);
       })
       .catch((err) => {
-        // console.log(err);
         res.redirect(`${HOST}/spotify/authlogin`);
       });
   },

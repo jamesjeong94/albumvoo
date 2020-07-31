@@ -13,15 +13,14 @@ interface ItemProps {
 }
 
 interface ItemListProps {
-  items: any[];
+  items: ItemProps[];
 }
 
 const ItemList: React.FC<ItemListProps> = ({ items }) => {
-  console.log('items', items);
   const itemsList = items.map((item: any, index: number) => {
     return <ItemRow key={index} info={item} />;
   });
-  return <div>HELLO??{itemsList}</div>;
+  return <div>{itemsList}</div>;
 };
 
 export = ItemList;
