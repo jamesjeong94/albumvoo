@@ -18,7 +18,7 @@ const publicDir = express.static(path.resolve(__dirname, '../client/public'));
 
 app
   .use(morgan('combined'))
-  .use(cors({ origin: true }))
+  .use(cors({ credentials: true, origin: true }))
   .use(cookieParser());
 app.use('/spotify', spotifyRouter);
 app.use(authChecker);

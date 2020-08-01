@@ -5,9 +5,14 @@ interface StreamRowProps {
 }
 
 const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
+  let imgUrl =
+    item.images.length > 0 ? item.images[item.images.length - 1].url : null;
   return (
-    <div>
-      {item.name} {item.artists[0].name} {item.release_date}
+    <div className="StreamRow">
+      <img src={imgUrl} />
+      <div>{item.name}</div>
+      <div>{item.artists[0].name}</div>
+      <div>{item.release_date}</div>
     </div>
   );
 };

@@ -14,12 +14,7 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
   };
 
   const streamRows = items.map((item) => {
-    return (
-      <div>
-        <StreamRow item={item}></StreamRow>
-        <p></p>
-      </div>
-    );
+    return <StreamRow item={item}></StreamRow>;
   });
   return (
     <div>
@@ -29,7 +24,7 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
         next={showMorePaging}
         loader={<h6>Loading</h6>}
         hasMore={true}
-        height={500}
+        height={600}
       >
         {streamRows}
       </InfiniteScroll>
