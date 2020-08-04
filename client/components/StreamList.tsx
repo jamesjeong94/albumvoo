@@ -7,19 +7,20 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import { TableHead } from '@material-ui/core';
+import TablePagination from '@material-ui/core/TablePagination';
 
 interface StreamListProps {
   items: any[];
 }
 
 const StreamList: React.FC<StreamListProps> = ({ items }) => {
-  const [paging, increasePaging] = useState(20);
+  const [page, setPage] = useState(0);
 
-  const showMorePaging = () => {
-    increasePaging(paging + 10);
+  const setNewPage = (event: any, newPage: any) => {
+    setPage(newPage);
   };
 
-  const streamRows = items.map((item) => {
+  const streamRows = items.slice(10 * page, 10 * (page + 1)).map((item) => {
     return <StreamRow item={item}></StreamRow>;
   });
   return (
@@ -27,19 +28,17 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
       <TableContainer>
         <Table stickyHeader>
           <StreamHeader></StreamHeader>
-          <TableBody>
-            <InfiniteScroll
-              dataLength={paging}
-              next={showMorePaging}
-              loader={<h6>Loading</h6>}
-              hasMore={true}
-              height={600}
-            >
-              {streamRows}
-            </InfiniteScroll>
-          </TableBody>
+          <TableBody>{streamRows}</TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={items.length}
+        rowsPerPage={10}
+        page={page}
+        onChangePage={setNewPage}
+      />
     </div>
   );
 };
