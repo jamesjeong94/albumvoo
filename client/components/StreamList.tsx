@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import StreamRow from './StreamRow';
 import StreamHeader from './StreamHeader';
 import Table from '@material-ui/core/Table';
@@ -21,13 +20,15 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
   };
 
   const streamRows = items.slice(10 * page, 10 * (page + 1)).map((item) => {
-    return <StreamRow item={item}></StreamRow>;
+    return <StreamRow key={item.id} item={item}></StreamRow>;
   });
   return (
     <div>
       <TableContainer>
         <Table stickyHeader>
-          <StreamHeader></StreamHeader>
+          <TableHead>
+            <StreamHeader></StreamHeader>
+          </TableHead>
           <TableBody>{streamRows}</TableBody>
         </Table>
       </TableContainer>

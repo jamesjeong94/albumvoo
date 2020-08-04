@@ -1,13 +1,10 @@
 import axios from 'axios';
+import { removeDuplicates, sortByDate } from '../util/spotifyControllerUtil';
 
 const HOST = process.env.HOST;
 
 const generateAuthHeader = (header = {}, cookies: any) => {
   return { ...header, Authorization: `Bearer ${cookies.access_token}` };
-};
-
-const handleError = (err: any) => {
-  console.log(err);
 };
 
 export = {
@@ -41,7 +38,6 @@ export = {
         if (err.response.status === 401) {
           res.redirect(`${HOST}/spotify/auth/refresh`);
         }
-        // res.redirect(`${HOST}/spotify/auth/login`);
       });
   },
   getRecentByTopArtists: (req: any, res: any) => {
@@ -58,32 +54,35 @@ export = {
           headers: generateAuthHeader({}, req.cookies),
         }).then(({ data }) => data.items);
       });
-      let prev: any;
-      axios
+      return axios
         .all(artists)
         .then((data: any) => {
-          // console.log(data[0]);
-          let formattedData = data
-            .reduce((acc: any[], curr: any[]) => {
-              acc.push(...curr);
-              return acc;
-            }, [])
-            .filter((item: any) => {
-              let arePrevAndCurrSame = prev === item.name;
-              prev = item.name;
-              return item.album_group !== 'appears_on' && !arePrevAndCurrSame;
-            })
-            .sort((a: any, b: any) => {
-              return (
-                new Date(b.release_date).getTime() -
-                new Date(a.release_date).getTime()
-              );
-            });
+          let formattedData = data.reduce((acc: any[], curr: any[]) => {
+            acc.push(...curr);
+            return acc;
+          }, []);
+          formattedData = sortByDate(removeDuplicates(formattedData));
           res.send(formattedData);
         })
         .catch((err) => {
           console.log(err);
         });
     });
+  },
+  getAlbumSongs: (req: any, res: any) => {
+    let id = req.query.album_id;
+    return axios({
+      method: 'get',
+      url: `https://api.spotify.com/v1/albums/${id}/tracks`,
+      headers: generateAuthHeader({}, req.cookies),
+    })
+      .then(({ data }) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          res.redirect(`${HOST}/spotify/auth/refresh`);
+        }
+      });
   },
 };

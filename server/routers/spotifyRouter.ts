@@ -12,4 +12,6 @@ router.get('/top', spotifyController.getTopOfUser);
 
 router.get('/recent', spotifyController.getRecentByTopArtists);
 
+router.get('/albumsongs', spotifyController.getAlbumSongs);
+
 export = router;
