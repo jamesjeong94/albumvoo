@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Table,
   TableRow,
@@ -10,18 +10,19 @@ import {
 } from '@material-ui/core';
 import AlbumSong from './AlbumSong';
 
-interface IndividualSongRowProps {
+interface AlbumSongListProps {
   songs: any[];
   open: boolean;
 }
 
-const IndividualSongRow: React.FC<IndividualSongRowProps> = ({
-  songs,
-  open,
-}) => {
+const AlbumSongList: React.FC<AlbumSongListProps> = ({ songs, open }) => {
+  const [isSongSaved, setSavedSong] = useState<any[]>([]);
+  const songIds = songs.map((song) => song.id);
+
   const albumSongs = songs.map((song) => {
     return <AlbumSong key={song.id} info={song}></AlbumSong>;
   });
+
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -30,10 +31,10 @@ const IndividualSongRow: React.FC<IndividualSongRowProps> = ({
             <Table size="small" aria-label="purchases">
               <TableHead>
                 <TableRow>
-                  <TableCell>Album</TableCell>
-                  <TableCell>Album</TableCell>
+                  <TableCell>No.</TableCell>
+                  <TableCell>Song</TableCell>
                   <TableCell>Artist</TableCell>
-                  <TableCell>Release Date</TableCell>
+                  <TableCell>Duration</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>{albumSongs}</TableBody>
@@ -45,4 +46,4 @@ const IndividualSongRow: React.FC<IndividualSongRowProps> = ({
   );
 };
 
-export = IndividualSongRow;
+export = AlbumSongList;

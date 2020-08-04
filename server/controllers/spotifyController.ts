@@ -77,6 +77,11 @@ export = {
       headers: generateAuthHeader({}, req.cookies),
     })
       .then(({ data }) => {
+        return axios({
+          method: 'get',
+          url: 'https://api.spotify.com/v1/me/tracks/contains',
+          headers: generateAuthHeader({}, req.cookies),
+        });
         res.send(data);
       })
       .catch((err) => {

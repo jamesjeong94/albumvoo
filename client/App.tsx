@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import ItemList from './components/ItemList';
-import StreamList from './components/StreamList';
+import StreamList from './components/Stream/StreamList';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
