@@ -12,7 +12,8 @@ const redirect_uri: string = `${HOST}/spotify/auth/redirect`;
 
 export = {
   loginUser: (req: any, res: any) => {
-    const scopes = 'user-read-private user-read-email user-top-read';
+    const scopes =
+      'user-read-private user-read-email user-top-read user-library-read';
     res.redirect(
       'https://accounts.spotify.com/authorize' +
         '?response_type=code' +

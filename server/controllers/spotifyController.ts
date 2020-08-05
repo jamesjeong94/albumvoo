@@ -77,7 +77,7 @@ export = {
       headers: generateAuthHeader({}, req.cookies),
     })
       .then(({ data }) => {
-        let song_ids = data.reduce((acc, curr) => {
+        let song_ids = data.items.reduce((acc: any, curr: any) => {
           acc.push(curr.id);
           return acc;
         }, []);
@@ -86,14 +86,18 @@ export = {
           url: 'https://api.spotify.com/v1/me/tracks/contains',
           headers: generateAuthHeader({}, req.cookies),
           params: {
-            ids: song_ids,
+            ids: song_ids[0],
           },
+        }).then((containsData) => {
+          console.log(containsData);
+          res.send(data);
         });
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          res.redirect(`${HOST}/spotify/auth/refresh`);
-        }
+        console.log(err);
+        // if (err.response.status === 401) {
+        //   res.redirect(`${HOST}/spotify/auth/refresh`);
+        // }
       });
   },
 };
