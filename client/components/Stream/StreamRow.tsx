@@ -21,7 +21,7 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
       url: 'http://localhost:3000/spotify/albumsongs',
       params: { album_id: id },
     }).then(({ data }) => {
-      setAlbumSongs(data.items);
+      setAlbumSongs(data);
     });
   };
 

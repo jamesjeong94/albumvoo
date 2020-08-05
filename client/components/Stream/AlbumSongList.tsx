@@ -8,6 +8,7 @@ import {
   Collapse,
   Box,
 } from '@material-ui/core';
+import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import AlbumSong from './AlbumSong';
 
 interface AlbumSongListProps {
@@ -31,6 +32,9 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({ songs, open }) => {
             <Table size="small" aria-label="purchases">
               <TableHead>
                 <TableRow>
+                  <TableCell>
+                    <FavoriteBorder fontSize="small"></FavoriteBorder>
+                  </TableCell>
                   <TableCell>No.</TableCell>
                   <TableCell>Song</TableCell>
                   <TableCell>Artist</TableCell>

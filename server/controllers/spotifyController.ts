@@ -77,27 +77,31 @@ export = {
       headers: generateAuthHeader({}, req.cookies),
     })
       .then(({ data }) => {
-        let song_ids = data.items.reduce((acc: any, curr: any) => {
-          acc.push(curr.id);
-          return acc;
-        }, []);
+        let song_ids = data.items
+          .reduce((acc: any, curr: any) => {
+            acc.push(curr.id);
+            return acc;
+          }, [])
+          .join(',');
         return axios({
           method: 'get',
           url: 'https://api.spotify.com/v1/me/tracks/contains',
           headers: generateAuthHeader({}, req.cookies),
           params: {
-            ids: song_ids[0],
+            ids: song_ids,
           },
         }).then((containsData) => {
-          console.log(containsData);
-          res.send(data);
+          let combinedData = data.items.map((song: any, index: any) => {
+            return { ...song, isSavedByUser: containsData.data[index] };
+          });
+          res.send(combinedData);
         });
       })
       .catch((err) => {
         console.log(err);
-        // if (err.response.status === 401) {
-        //   res.redirect(`${HOST}/spotify/auth/refresh`);
-        // }
+        if (err.response.status === 401) {
+          res.redirect(`${HOST}/spotify/auth/refresh`);
+        }
       });
   },
 };

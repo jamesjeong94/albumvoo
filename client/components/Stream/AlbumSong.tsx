@@ -27,7 +27,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({ info }) => {
   return (
     <TableRow>
       <TableCell>
-        <FavoriteWidget></FavoriteWidget>
+        <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
       </TableCell>
       <TableCell>{info.track_number}</TableCell>
       <TableCell>{info.name}</TableCell>
