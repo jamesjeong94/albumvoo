@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import SpotifyPlayer from './components/Player/SpotifyPlayer';
 import ItemList from './components/ItemList';
 import StreamList from './components/Stream/StreamList';
 
@@ -49,8 +50,9 @@ const App: React.FC = () => {
         Get Top
       </button>
       <button onClick={getRecentByTopArtists}>Get Recent</button>
-      <ItemList items={topArtists} />
-      <StreamList items={recentAlbums} />
+      <SpotifyPlayer></SpotifyPlayer>
+      <ItemList items={topArtists}></ItemList>
+      <StreamList items={recentAlbums}></StreamList>
     </div>
   );
 };
