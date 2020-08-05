@@ -77,12 +77,18 @@ export = {
       headers: generateAuthHeader({}, req.cookies),
     })
       .then(({ data }) => {
+        let song_ids = data.reduce((acc, curr) => {
+          acc.push(curr.id);
+          return acc;
+        }, []);
         return axios({
           method: 'get',
           url: 'https://api.spotify.com/v1/me/tracks/contains',
           headers: generateAuthHeader({}, req.cookies),
+          params: {
+            ids: song_ids,
+          },
         });
-        res.send(data);
       })
       .catch((err) => {
         if (err.response.status === 401) {
