@@ -27,6 +27,7 @@
     "react-infinite-scroll-component": "^5.0.5",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-script-tag": "^1.1.2",
     "react-spotify-web-playback": "^0.6.0",
     "sass": "^1.26.10"
   },
@@ -44,6 +45,7 @@
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
+    "babel-runtime": "^6.26.0",
     "codelyzer": "^6.0.0",
     "css-loader": "^4.2.0",
     "css-modules-typescript-loader": "^4.0.0",
