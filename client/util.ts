@@ -4,3 +4,10 @@ export const getCookieValue = (cookie: string): string => {
   );
   return cookieValue ? cookieValue[0].split('=')[1] : '';
 };
+
+// export class ScriptCache extends{
+//   constructor(scripts: any[]) {
+
+//   }
+//   onLoad(success, reject) {}
+// }
