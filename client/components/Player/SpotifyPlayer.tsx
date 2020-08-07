@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { getCookieValue, loadScript } from '../../util';
-import { IWebPlaybackError } from '../../types/spotfy';
+import { IWebPlaybackError } from '../../types/spotify';
+import {
+  getDevices,
+  getPlaybackState,
+  next,
+  pause,
+  play,
+  previous,
+  seek,
+  setDevice,
+  setVolume,
+} from '../../spotifyPlayerAPI';
+import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {}
 
@@ -20,7 +32,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   const [position, setPosition] = useState(0);
   const [previousTracks, setPreviousTracks] = useState([]);
   const [status, setStatus] = useState('STATUS.IDLE');
-  const [track, setTrack] = useState('');
+  const [track, setTrack] = useState('spotify:track:1ZvBVbsaNqHEP6ymXaPGlj');
   const [volume, setVolume] = useState(1);
 
   let player;
@@ -33,7 +45,21 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
     });
   };
 
-  const handlePlayerStatus = () => {};
+  const togglePlay = async () => {
+    console.log(devices);
+  };
+  const initializeDevices = async (deviceId: string) => {
+    let { devices } = await getDevices(access_token);
+    let currentDevice = deviceId;
+    return { currentDevice, allDevices: devices };
+  };
+
+  const handlePlayerStatus = async ({ device_id }: any) => {
+    const { currentDevice, allDevices } = await initializeDevices(device_id);
+    console.log(allDevices);
+    setDevices(allDevices);
+    setCurrentDeviceId(currentDevice);
+  };
 
   const handlePlayerStateChanges = () => {};
 
@@ -84,7 +110,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
 
   return (
     <div>
-      <p>player stuff</p>
+      <TestDashboard togglePlay={togglePlay}></TestDashboard>
     </div>
   );
 };
