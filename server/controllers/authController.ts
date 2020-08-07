@@ -10,7 +10,7 @@ const HOST = process.env.HOST;
 
 const redirect_uri: string = `${HOST}/spotify/auth/redirect`;
 const scopes =
-  'user-read-private user-read-email user-top-read user-library-read user-modify-playback-state user-library-modify streaming user-read-playback-state user-modify-playback-state user-read-birthdate';
+  'user-read-private user-read-email user-top-read user-library-read user-library-modify streaming user-read-playback-state user-modify-playback-state';
 export = {
   loginUser: (req: any, res: any) => {
     res.redirect(
