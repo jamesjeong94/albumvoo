@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getCookieValue, loadScript } from '../../util';
-import { IWebPlaybackError } from '../../types/spotify';
+//prettier-ignore
+import {
+  IWebPlaybackError,IWebPlaybackImage,IWebPlaybackAlbum,IWebPlaybackArtist,IWebPlaybackState
+} from '../../types/spotify';
 import {
   getDevices,
   getPlaybackState,
@@ -16,7 +19,23 @@ import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {}
 
+var player: any;
+var playerProgressInterval: any;
+
 const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
+  //initialize constants
+  const progressUpdateInterval = 100;
+  const emptyTrack = {
+    artists: '',
+    durationMs: 0,
+    id: '',
+    image: '',
+    name: '',
+    uri: '',
+  };
+  const access_token = getCookieValue('access_token');
+
+  //initialize state
   const [currentDeviceId, setCurrentDeviceId] = useState<string>('');
   const [devices, setDevices] = useState([]);
   const [error, setError] = useState('');
@@ -30,44 +49,14 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   const [needsUpdate, setNeedsUpdate] = useState(false);
   const [nextTracks, setNextTracks] = useState([]);
   const [position, setPosition] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
   const [previousTracks, setPreviousTracks] = useState([]);
   const [status, setStatus] = useState('STATUS.IDLE');
-  const [track, setTrack] = useState('spotify:track:1ZvBVbsaNqHEP6ymXaPGlj');
+  const [track, setTrack] = useState(emptyTrack);
   const [volume, setVolume] = useState(1);
 
-  let player;
-  const access_token = getCookieValue('access_token');
-  const loadPlayer = async () => {
-    await loadScript({
-      defer: true,
-      id: 'spotify-player',
-      source: 'https://sdk.scdn.co/spotify-player.js',
-    });
-  };
-
-  const togglePlay = async () => {
-    console.log(devices);
-  };
-  const initializeDevices = async (deviceId: string) => {
-    let { devices } = await getDevices(access_token);
-    let currentDevice = deviceId;
-    return { currentDevice, allDevices: devices };
-  };
-
-  const handlePlayerStatus = async ({ device_id }: any) => {
-    const { currentDevice, allDevices } = await initializeDevices(device_id);
-    console.log(allDevices);
-    setDevices(allDevices);
-    setCurrentDeviceId(currentDevice);
-  };
-
-  const handlePlayerStateChanges = () => {};
-
-  const handlePlayerErrors = (type: string, message: string) => {};
-
   const initializePlayer = () => {
-    //@ts-ignore
-    player = new window.Spotify.Player({
+    player = new (window as any).Spotify.Player({
       getOAuthToken: (cb: (access_token: string) => void) => {
         cb(access_token);
       },
@@ -90,27 +79,121 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
     );
 
     player.connect();
+    console.log(player);
   };
 
   //player state change
-  useEffect(() => {}, [
-    currentDeviceId,
-    error,
-    isInitializing,
-    isPlaying,
-    status,
-    track,
-  ]);
 
   //initial mount
   useEffect(() => {
-    (window as any).onSpotifyWebPlaybackSDKReady = initializePlayer;
     loadPlayer();
   }, []);
 
+  const loadPlayer = async () => {
+    await loadScript({
+      defer: true,
+      id: 'spotify-player',
+      source: 'https://sdk.scdn.co/spotify-player.js',
+    });
+    (window as any).onSpotifyWebPlaybackSDKReady = initializePlayer;
+  };
+
+  const togglePlay = async () => {
+    const uri = 'spotify:track:1ZvBVbsaNqHEP6ymXaPGlj';
+    if (!isPlaying) {
+      await play(
+        { uris: [uri], position_ms: elapsed, deviceId: currentDeviceId },
+        access_token
+      );
+    } else {
+      await pause(access_token);
+    }
+    setIsPlaying(!isPlaying);
+  };
+  const initializeDevices = async (deviceId: string) => {
+    let { devices } = await getDevices(access_token);
+    let currentDevice = deviceId;
+    return { currentDevice, allDevices: devices };
+  };
+
+  //set state for current device and devices
+  const handlePlayerStatus = async ({ device_id }: any) => {
+    const { allDevices } = await initializeDevices(device_id);
+    setCurrentDeviceId(device_id);
+    setDevices(allDevices);
+  };
+
+  //set state for current player state
+  const handlePlayerStateChanges = async () => {
+    let currentState = await (player as any).getCurrentState();
+    const {
+      album,
+      artists,
+      duration_ms,
+      id,
+      name,
+      uri,
+    } = currentState.track_window.current_track;
+    let current_track = {
+      artists: artists.map((d: any) => d.name).join(', '),
+      durationMs: duration_ms,
+      id,
+      image: setAlbumImage(album),
+      name,
+      uri,
+    };
+    setTrack(current_track);
+  };
+
+  //set state for current playback position
+  const handlePlaybackStatus = () => {
+    if (isPlaying) {
+      if (!playerProgressInterval) {
+        playerProgressInterval = window.setInterval(
+          updateCurrentProgress,
+          progressUpdateInterval
+        );
+      }
+    } else {
+      if (playerProgressInterval) {
+        clearInterval(playerProgressInterval);
+        playerProgressInterval = undefined;
+      }
+    }
+  };
+
+  const updateCurrentProgress = async () => {
+    if (player) {
+      const state = (await player.getCurrentState()) as IWebPlaybackState;
+      if (state) {
+        const position = state.position / state.track_window.current_track.duration_ms;
+        setElapsed(state.position);
+        setPosition(Number((position * 100).toFixed(1)));
+      }
+    }
+  };
+
+  const setAlbumImage = (album: IWebPlaybackAlbum): string => {
+    const width = Math.min(...album.images.map((d) => d.width));
+    const thumb: IWebPlaybackImage =
+      album.images.find((d) => d.width === width) || ({} as IWebPlaybackImage);
+
+    return thumb.url;
+  };
+
+  const handlePlayerErrors = (type: string, message: string) => {};
+
+  useEffect(() => {
+    handlePlaybackStatus();
+  }, [isPlaying]);
+
   return (
     <div>
-      <TestDashboard togglePlay={togglePlay}></TestDashboard>
+      <TestDashboard
+        togglePlay={togglePlay}
+        currentTime={elapsed / 1000}
+        totalTime={track.durationMs / 1000}
+      ></TestDashboard>
     </div>
   );
 };
