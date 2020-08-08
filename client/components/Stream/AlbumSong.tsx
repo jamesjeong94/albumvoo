@@ -12,10 +12,11 @@ import {
 import FavoriteWidget from './FavoriteWidget';
 
 interface AlbumSongProps {
+  playThisSong: (song_id: string) => void;
   info: any;
 }
 
-const AlbumSong: React.FC<AlbumSongProps> = ({ info }) => {
+const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong }) => {
   const artists = info.artists
     .reduce((acc: any[], curr: any) => {
       acc.push(curr.name);
@@ -28,7 +29,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({ info }) => {
     <TableRow
       hover={true}
       onClick={() => {
-        console.log(`play ${info.uri}`);
+        console.log(playThisSong(info.uri));
       }}
     >
       <TableCell>

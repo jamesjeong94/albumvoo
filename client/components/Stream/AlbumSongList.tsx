@@ -14,14 +14,15 @@ import AlbumSong from './AlbumSong';
 interface AlbumSongListProps {
   songs: any[];
   open: boolean;
+  playThisSong: (song_id: string) => void;
 }
 
-const AlbumSongList: React.FC<AlbumSongListProps> = ({ songs, open }) => {
+const AlbumSongList: React.FC<AlbumSongListProps> = ({ songs, open, playThisSong }) => {
   const [isSongSaved, setSavedSong] = useState<any[]>([]);
   const songIds = songs.map((song) => song.id);
 
   const albumSongs = songs.map((song) => {
-    return <AlbumSong key={song.id} info={song}></AlbumSong>;
+    return <AlbumSong key={song.id} info={song} playThisSong={playThisSong}></AlbumSong>;
   });
 
   return (

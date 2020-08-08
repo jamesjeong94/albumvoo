@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-import AlbumSongList from './AlbumSongList';
+import AlbumSongListWrapper from './AlbumSongListWrapper';
 
 interface StreamRowProps {
   item: any;
@@ -25,8 +25,7 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
     });
   };
 
-  let imgUrl =
-    item.images.length > 0 ? item.images[item.images.length - 1].url : null;
+  let imgUrl = item.images.length > 0 ? item.images[item.images.length - 1].url : null;
   return (
     <React.Fragment>
       <TableRow>
@@ -49,7 +48,7 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
         <TableCell>{item.artists[0].name}</TableCell>
         <TableCell>{item.release_date}</TableCell>
       </TableRow>
-      <AlbumSongList songs={albumSongs} open={open}></AlbumSongList>
+      <AlbumSongListWrapper songs={albumSongs} open={open}></AlbumSongListWrapper>
     </React.Fragment>
   );
 };

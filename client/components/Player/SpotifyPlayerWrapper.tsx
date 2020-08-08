@@ -1,15 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import SpotifyPlayer from './SpotifyPlayer';
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state: any) => {
+  return { song: state.song };
 };
 
-interface SpotifyPlayerWrapperProps {}
+const connector = connect(mapStateToProps);
 
-const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({}) => {
-  return <SpotifyPlayer song={'something'} queue={['something']}></SpotifyPlayer>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type SpotifyPlayerWrapperProps = PropsFromRedux;
+
+const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({ song }) => {
+  return <SpotifyPlayer song={song}></SpotifyPlayer>;
 };
 
-export = connect(mapStateToProps)(SpotifyPlayerWrapper);
+export = connector(SpotifyPlayerWrapper);

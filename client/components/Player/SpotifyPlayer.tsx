@@ -19,7 +19,6 @@ import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {
   song: string;
-  queue: string[];
 }
 
 var player: any;
