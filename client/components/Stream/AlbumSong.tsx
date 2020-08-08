@@ -25,7 +25,12 @@ const AlbumSong: React.FC<AlbumSongProps> = ({ info }) => {
 
   let duration = moment.utc(info.duration_ms).format('mm:ss');
   return (
-    <TableRow>
+    <TableRow
+      hover={true}
+      onClick={() => {
+        console.log(`play ${info.uri}`);
+      }}
+    >
       <TableCell>
         <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
       </TableCell>

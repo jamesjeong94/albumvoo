@@ -113,6 +113,12 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   const initializeDevices = async (deviceId: string) => {
     let { devices } = await getDevices(access_token);
     let currentDevice = deviceId;
+    let savedDeviceId = sessionStorage.getItem('avdeviceitem');
+    if (!savedDeviceId) {
+      sessionStorage.setItem('avdeviceitem', currentDevice);
+    } else {
+      currentDevice = savedDeviceId;
+    }
     return { currentDevice, allDevices: devices };
   };
 
@@ -174,7 +180,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   };
 
   const setAlbumImage = (album: IWebPlaybackAlbum): string => {
-    const width = Math.min(...album.images.map((d) => d.width));
+    const width = Math.max(...album.images.map((d) => d.width));
     const thumb: IWebPlaybackImage =
       album.images.find((d) => d.width === width) || ({} as IWebPlaybackImage);
 
@@ -193,6 +199,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
         togglePlay={togglePlay}
         currentTime={elapsed / 1000}
         totalTime={track.durationMs / 1000}
+        currentTrack={track}
       ></TestDashboard>
     </div>
   );

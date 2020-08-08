@@ -36,8 +36,7 @@ export = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:
-          'Basic ' +
-          Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
+          'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
       },
     })
       .then(({ data }) => {
@@ -45,9 +44,7 @@ export = {
           .cookie('access_token', data.access_token, {
             maxAge: data.expires_in * 1000,
           })
-          .cookie('refresh_token', data.refresh_token, {
-            maxAge: data.expires_in * 1000,
-          })
+          .cookie('refresh_token', data.refresh_token)
           .redirect(`${HOST}/main`);
       })
       .catch((err) => {
@@ -67,15 +64,19 @@ export = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:
-          'Basic ' +
-          Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
+          'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
       },
-    }).then(({ data }) => {
-      res
-        .cookie('access_token', data.access_token, {
-          maxAge: data.expires_in * 1000,
-        })
-        .redirect(`${HOST}/main`);
-    });
+    })
+      .then(({ data }) => {
+        res
+          .cookie('access_token', data.access_token, {
+            maxAge: data.expires_in * 1000,
+          })
+          .cookie('refresh_token', data.refresh_token)
+          .redirect(`${HOST}/main`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
