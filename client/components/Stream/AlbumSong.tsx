@@ -15,13 +15,19 @@ interface AlbumSongProps {
   playThisSong: (song_id: string) => void;
   info: any;
   currentSong: string;
+  elapsedTime: any;
 }
 
-const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong, currentSong }) => {
+const AlbumSong: React.FC<AlbumSongProps> = ({
+  info,
+  playThisSong,
+  currentSong,
+  elapsedTime,
+}) => {
   const isThisSongBeingPlayed = currentSong === info.uri;
 
-  const style = isThisSongBeingPlayed;
-
+  const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
+  console.log(percentage);
   const artists = info.artists
     .reduce((acc: any[], curr: any) => {
       acc.push(curr.name);
@@ -36,6 +42,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong, currentSong }
       onClick={() => {
         playThisSong(info.uri);
       }}
+      style={{ backgroundColor: 'lightgrey', width: `${percentage}%` }}
     >
       <TableCell>
         <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>

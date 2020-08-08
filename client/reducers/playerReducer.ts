@@ -1,7 +1,9 @@
 import { DEQUEUE_SONG, CURRENT_ELAPSED_TIME } from '../constants/playerConstants';
 import { PlayerActionTypes } from '../types/player';
 
-const initialState = null;
+const initialState = {
+  elapsedTime: 0,
+};
 
 const playerReducer = (state: any = initialState, action: PlayerActionTypes): any => {
   switch (action.type) {

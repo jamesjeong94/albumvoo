@@ -16,6 +16,7 @@ interface AlbumSongListProps {
   open: boolean;
   playThisSong: (song_id: string) => void;
   currentSong: string;
+  elapsedTime: any;
 }
 
 const AlbumSongList: React.FC<AlbumSongListProps> = ({
@@ -23,6 +24,7 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
   open,
   playThisSong,
   currentSong,
+  elapsedTime,
 }) => {
   const [isSongSaved, setSavedSong] = useState<any[]>([]);
   const songIds = songs.map((song) => song.id);
@@ -34,6 +36,7 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
         info={song}
         playThisSong={playThisSong}
         currentSong={currentSong}
+        elapsedTime={elapsedTime}
       ></AlbumSong>
     );
   });

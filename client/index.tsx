@@ -8,13 +8,13 @@ import LandingPage from './LandingPage';
 import './public/styles.scss';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Switch>
-      <Provider store={store}>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
         <Route path="/main" component={App} />
-      </Provider>
-      <Route path="/" component={LandingPage} />
-    </Switch>
-  </BrowserRouter>,
+        <Route path="/" component={LandingPage} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('app')
 );

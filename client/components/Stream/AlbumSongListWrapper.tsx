@@ -5,10 +5,11 @@ import AlbumSongList from './AlbumSongList';
 
 interface StateProps {
   currentSong: string;
+  elapsedTime: any;
 }
 
 const mapStateToProps = (state: any): StateProps => {
-  return { currentSong: state.stream.currentSong };
+  return { currentSong: state.stream.currentSong, elapsedTime: state.player.elapsedTime };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
@@ -35,9 +36,11 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
   open,
   playThisSong,
   currentSong,
+  elapsedTime,
 }) => {
   return (
     <AlbumSongList
+      elapsedTime={elapsedTime}
       currentSong={currentSong}
       songs={songs}
       open={open}

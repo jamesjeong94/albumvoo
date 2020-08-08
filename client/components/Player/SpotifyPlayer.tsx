@@ -24,6 +24,7 @@ interface SpotifyPlayerProps {
 
 var player: any;
 var playerProgressInterval: any;
+var isMounted: boolean = false;
 
 const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) => {
   //initialize constants
@@ -48,8 +49,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
   const [isMagnified, setIsMagnified] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [isUnsupported, setIsUnsupported] = useState(false);
-  const [needsUpdate, setNeedsUpdate] = useState(false);
   const [nextTracks, setNextTracks] = useState([]);
   const [position, setPosition] = useState(0);
   const [elapsed, setElapsed] = useState(0);
@@ -82,7 +81,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
     );
 
     player.connect();
-    console.log('Player initialized');
+    isMounted = true;
   };
 
   //player state change
@@ -93,16 +92,18 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
   }, []);
 
   useEffect(() => {
-    playNewSong();
+    if (isMounted) {
+      playNewSong();
+    }
   }, [song]);
 
   const loadPlayer = async () => {
+    (window as any).onSpotifyWebPlaybackSDKReady = initializePlayer;
     await loadScript({
       defer: true,
       id: 'spotify-player',
       source: 'https://sdk.scdn.co/spotify-player.js',
     });
-    (window as any).onSpotifyWebPlaybackSDKReady = initializePlayer;
   };
 
   const togglePlay = async () => {
@@ -118,7 +119,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
   };
 
   const playNewSong = async () => {
-    console.log('Play new song');
     await play({ uris: [song], position_ms: 0, deviceId: currentDeviceId }, access_token);
     setIsPlaying(true);
   };
