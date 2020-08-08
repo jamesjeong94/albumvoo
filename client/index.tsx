@@ -12,8 +12,8 @@ ReactDOM.render(
     <Switch>
       <Provider store={store}>
         <Route path="/main" component={App} />
-        <Route path="/" component={LandingPage} />
       </Provider>
+      <Route path="/" component={LandingPage} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('app')

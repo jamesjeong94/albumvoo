@@ -1,6 +1,4 @@
-export interface Song {
-  type: string;
-}
+export type Song = string;
 
 export interface PlaySongAction {
   type: string;

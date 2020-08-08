@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { playSong } from '../../actions/streamActions';
 import AlbumSongList from './AlbumSongList';
 
 const mapStateToProps = () => {
@@ -9,7 +10,7 @@ const mapStateToProps = () => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     playThisSong: (song_id: string): void => {
-      console.log(song_id);
+      dispatch(playSong(song_id));
     },
   };
 };

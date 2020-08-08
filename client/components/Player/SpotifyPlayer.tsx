@@ -24,7 +24,7 @@ interface SpotifyPlayerProps {
 var player: any;
 var playerProgressInterval: any;
 
-const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
+const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song }) => {
   //initialize constants
   const progressUpdateInterval = 100;
   const emptyTrack = {
@@ -81,7 +81,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
     );
 
     player.connect();
-    console.log(player);
+    console.log('Player initialized');
   };
 
   //player state change
@@ -90,6 +90,10 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   useEffect(() => {
     loadPlayer();
   }, []);
+
+  useEffect(() => {
+    playNewSong();
+  }, [song]);
 
   const loadPlayer = async () => {
     await loadScript({
@@ -101,10 +105,9 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
   };
 
   const togglePlay = async () => {
-    const uri = 'spotify:track:1ZvBVbsaNqHEP6ymXaPGlj';
     if (!isPlaying) {
       await play(
-        { uris: [uri], position_ms: elapsed, deviceId: currentDeviceId },
+        { uris: [song], position_ms: elapsed, deviceId: currentDeviceId },
         access_token
       );
     } else {
@@ -112,6 +115,13 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({}) => {
     }
     setIsPlaying(!isPlaying);
   };
+
+  const playNewSong = async () => {
+    console.log('Play new song');
+    await play({ uris: [song], position_ms: 0, deviceId: currentDeviceId }, access_token);
+    setIsPlaying(true);
+  };
+
   const initializeDevices = async (deviceId: string) => {
     let { devices } = await getDevices(access_token);
     let currentDevice = deviceId;

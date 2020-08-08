@@ -29,7 +29,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong }) => {
     <TableRow
       hover={true}
       onClick={() => {
-        console.log(playThisSong(info.uri));
+        playThisSong(info.uri);
       }}
     >
       <TableCell>

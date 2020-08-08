@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import SpotifyPlayer from './SpotifyPlayer';
 
 const mapStateToProps = (state: any) => {
-  return { song: state.song };
+  return { song: state.stream.currentSong };
 };
 
 const connector = connect(mapStateToProps);
