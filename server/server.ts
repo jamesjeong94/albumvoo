@@ -21,14 +21,12 @@ app
   .use(cors({ credentials: true, origin: true }))
   .use(cookieParser());
 app.use('/spotify', spotifyRouter);
+app.use(publicDir);
 app.use('/main', authChecker);
-app.use('/main', publicDir);
 
-app.get('/', (req, res) => {
-  res.send('Landing page');
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public/index.html'));
 });
-
-app.get('/main', (req, res) => {});
 
 app.listen(PORT, () => {
   console.log(`Listening in on port ${PORT}`);

@@ -4,6 +4,7 @@ import axios from 'axios';
 import SpotifyPlayer from './components/Player/SpotifyPlayer';
 import ItemList from './components/ItemList';
 import StreamList from './components/Stream/StreamList';
+import SpotifyPlayerWrapper from './components/Player/SpotifyPlayerWrapper';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
@@ -50,7 +51,7 @@ const App: React.FC = () => {
         Get Top
       </button>
       <button onClick={getRecentByTopArtists}>Get Recent</button>
-      <SpotifyPlayer></SpotifyPlayer>
+      <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
       <ItemList items={topArtists}></ItemList>
       <StreamList items={recentAlbums}></StreamList>
     </div>

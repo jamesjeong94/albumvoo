@@ -17,7 +17,10 @@ import {
 } from '../../spotifyPlayerAPI';
 import TestDashboard from './TestDashboard';
 
-interface SpotifyPlayerProps {}
+interface SpotifyPlayerProps {
+  song: string;
+  queue: string[];
+}
 
 var player: any;
 var playerProgressInterval: any;
