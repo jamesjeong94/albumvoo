@@ -15,6 +15,11 @@ export interface DequeueSongAction {
   payload: null;
 }
 
+export interface CurrentElaspedTimeAction {
+  type: string;
+  payload: number;
+}
+
 export type PlayerActionTypes = PlaySongAction | QueueSongAction | DequeueSongAction;
 
 export interface PlayerState {

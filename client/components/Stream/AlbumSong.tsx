@@ -14,9 +14,14 @@ import FavoriteWidget from './FavoriteWidget';
 interface AlbumSongProps {
   playThisSong: (song_id: string) => void;
   info: any;
+  currentSong: string;
 }
 
-const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong }) => {
+const AlbumSong: React.FC<AlbumSongProps> = ({ info, playThisSong, currentSong }) => {
+  const isThisSongBeingPlayed = currentSong === info.uri;
+
+  const style = isThisSongBeingPlayed;
+
   const artists = info.artists
     .reduce((acc: any[], curr: any) => {
       acc.push(curr.name);

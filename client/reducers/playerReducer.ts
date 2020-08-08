@@ -1,4 +1,4 @@
-import { DEQUEUE_SONG } from '../constants/playerConstants';
+import { DEQUEUE_SONG, CURRENT_ELAPSED_TIME } from '../constants/playerConstants';
 import { PlayerActionTypes } from '../types/player';
 
 const initialState = null;
@@ -9,6 +9,10 @@ const playerReducer = (state: any = initialState, action: PlayerActionTypes): an
       state.queue.shift();
       return {
         ...state,
+      };
+    case CURRENT_ELAPSED_TIME:
+      return {
+        elapsedTime: action.payload,
       };
     default:
       return state;

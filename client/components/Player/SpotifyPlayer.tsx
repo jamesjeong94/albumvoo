@@ -19,12 +19,13 @@ import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {
   song: string;
+  currentElapsed: (elaspedTime: number) => void;
 }
 
 var player: any;
 var playerProgressInterval: any;
 
-const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song }) => {
+const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) => {
   //initialize constants
   const progressUpdateInterval = 100;
   const emptyTrack = {
@@ -186,6 +187,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song }) => {
       if (state) {
         const position = state.position / state.track_window.current_track.duration_ms;
         setElapsed(state.position);
+        currentElapsed(state.position);
         setPosition(Number((position * 100).toFixed(1)));
       }
     }
