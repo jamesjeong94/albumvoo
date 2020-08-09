@@ -9,13 +9,16 @@ interface StateProps {
 }
 
 const mapStateToProps = (state: any): StateProps => {
-  return { currentSong: state.stream.currentSong, elapsedTime: state.player.elapsedTime };
+  return {
+    currentSong: state.stream.currentSong,
+    elapsedTime: state.player.elapsedTime,
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    playThisSong: (song_id: string): void => {
-      dispatch(playSong(song_id));
+    playThisSong: (song_id: string, context: string): void => {
+      dispatch(playSong(song_id, context));
     },
   };
 };
@@ -23,6 +26,7 @@ const mapDispatchToProps = (dispatch: any) => {
 interface PropsFromParent {
   songs: any[];
   open: boolean;
+  context: string;
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -37,11 +41,13 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
   playThisSong,
   currentSong,
   elapsedTime,
+  context,
 }) => {
   return (
     <AlbumSongList
       elapsedTime={elapsedTime}
       currentSong={currentSong}
+      context={context}
       songs={songs}
       open={open}
       playThisSong={playThisSong}

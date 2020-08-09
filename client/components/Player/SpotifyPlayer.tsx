@@ -19,6 +19,7 @@ import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {
   song: string;
+  context: string;
   currentElapsed: (elaspedTime: number) => void;
 }
 
@@ -26,7 +27,11 @@ var player: any;
 var playerProgressInterval: any;
 var isMounted: boolean = false;
 
-const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) => {
+const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
+  song,
+  context,
+  currentElapsed,
+}) => {
   //initialize constants
   const progressUpdateInterval = 100;
   const emptyTrack = {
@@ -109,7 +114,12 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
   const togglePlay = async () => {
     if (!isPlaying) {
       await play(
-        { uris: [song], position_ms: elapsed, deviceId: currentDeviceId },
+        {
+          uris: [song],
+          position_ms: elapsed,
+          deviceId: currentDeviceId,
+          context_uri: context,
+        },
         access_token
       );
     } else {
@@ -208,14 +218,12 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({ song, currentElapsed }) =
   }, [isPlaying]);
 
   return (
-    <div>
-      <TestDashboard
-        togglePlay={togglePlay}
-        currentTime={elapsed / 1000}
-        totalTime={track.durationMs / 1000}
-        currentTrack={track}
-      ></TestDashboard>
-    </div>
+    <TestDashboard
+      togglePlay={togglePlay}
+      currentTime={elapsed / 1000}
+      totalTime={track.durationMs / 1000}
+      currentTrack={track}
+    ></TestDashboard>
   );
 };
 

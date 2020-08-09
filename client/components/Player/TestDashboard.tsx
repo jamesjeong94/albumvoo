@@ -14,7 +14,7 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   currentTrack,
 }) => {
   return (
-    <div style={{ border: '1px solid black' }}>
+    <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
       <button onClick={togglePlay}>Play/Pause</button>
       <p>
         {currentTrack.name} by {currentTrack.artists}

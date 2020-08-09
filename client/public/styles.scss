@@ -5,3 +5,16 @@
 .body {
   background-color: red;
 }
+
+.SpotifyPlayer {
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  clear: both;
+}
+
+.StreamList {
+  overflow: scroll;
+  height: 75%;
+}

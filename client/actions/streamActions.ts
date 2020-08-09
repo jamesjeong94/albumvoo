@@ -1,10 +1,10 @@
 import { PLAY_SONG, ADD_SONG_TO_QUEUE } from '../constants/streamConstants';
-import { PlayerActionTypes, Song } from '../types/player';
+import { PlayerActionTypes, Song, Context } from '../types/player';
 
-export const playSong = (song: Song): PlayerActionTypes => {
+export const playSong = (song: Song, context: Context): PlayerActionTypes => {
   return {
     type: PLAY_SONG,
-    payload: song,
+    payload: { song, context },
   };
 };
 

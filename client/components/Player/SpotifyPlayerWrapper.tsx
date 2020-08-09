@@ -4,7 +4,10 @@ import SpotifyPlayer from './SpotifyPlayer';
 import { setCurrentElapsed } from '../../actions/playerActions';
 
 const mapStateToProps = (state: any) => {
-  return { song: state.stream.currentSong };
+  return {
+    song: state.stream.currentSong.song,
+    context: state.stream.currentSong.context,
+  };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
@@ -24,8 +27,15 @@ type SpotifyPlayerWrapperProps = PropsFromRedux;
 const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({
   song,
   currentElapsed,
+  context,
 }) => {
-  return <SpotifyPlayer song={song} currentElapsed={currentElapsed}></SpotifyPlayer>;
+  return (
+    <SpotifyPlayer
+      song={song}
+      context={context}
+      currentElapsed={currentElapsed}
+    ></SpotifyPlayer>
+  );
 };
 
 export = connector(SpotifyPlayerWrapper);

@@ -1,8 +1,15 @@
 export type Song = string;
 
+export type Context = string;
+
+export interface AlbumSong {
+  song: Song;
+  context: Context;
+}
+
 export interface PlaySongAction {
   type: string;
-  payload: Song;
+  payload: AlbumSong;
 }
 
 export interface QueueSongAction {

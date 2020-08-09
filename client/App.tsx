@@ -41,7 +41,6 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <h1>hi</h1>
       <button onClick={getUserData}>Get User Data</button>
       <button
         onClick={() => {
@@ -51,9 +50,8 @@ const App: React.FC = () => {
         Get Top
       </button>
       <button onClick={getRecentByTopArtists}>Get Recent</button>
-      <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
-      <ItemList items={topArtists}></ItemList>
       <StreamList items={recentAlbums}></StreamList>
+      <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
     </div>
   );
 };

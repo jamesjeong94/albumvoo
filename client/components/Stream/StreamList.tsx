@@ -23,7 +23,7 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
     return <StreamRow key={item.id} item={item}></StreamRow>;
   });
   return (
-    <div>
+    <div className="StreamList">
       <TableContainer>
         <Table stickyHeader>
           <TableHead>

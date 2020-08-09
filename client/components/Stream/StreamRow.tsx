@@ -48,7 +48,11 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
         <TableCell>{item.artists[0].name}</TableCell>
         <TableCell>{item.release_date}</TableCell>
       </TableRow>
-      <AlbumSongListWrapper songs={albumSongs} open={open}></AlbumSongListWrapper>
+      <AlbumSongListWrapper
+        context={item.uri}
+        songs={albumSongs}
+        open={open}
+      ></AlbumSongListWrapper>
     </React.Fragment>
   );
 };

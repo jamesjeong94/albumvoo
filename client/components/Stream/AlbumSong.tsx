@@ -13,10 +13,11 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FavoriteWidget from './FavoriteWidget';
 
 interface AlbumSongProps {
-  playThisSong: (song_id: string) => void;
+  playThisSong: (song_id: string, context: string) => void;
   info: any;
   currentSong: string;
   elapsedTime: any;
+  context: string;
 }
 
 const theme = createMuiTheme({
@@ -34,10 +35,10 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
   playThisSong,
   currentSong,
   elapsedTime,
+  context,
 }) => {
   const isThisSongBeingPlayed = currentSong === info.uri;
   const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
-  console.log(percentage);
   const progressBar = isThisSongBeingPlayed ? (
     <TableRow>
       <TableCell colSpan={6}>
@@ -67,7 +68,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
       <TableRow
         hover={true}
         onClick={() => {
-          playThisSong(info.uri);
+          playThisSong(info.uri, context);
         }}
       >
         <TableCell>

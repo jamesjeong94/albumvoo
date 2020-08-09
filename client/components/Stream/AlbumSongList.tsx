@@ -15,9 +15,10 @@ import AlbumSong from './AlbumSong';
 interface AlbumSongListProps {
   songs: any[];
   open: boolean;
-  playThisSong: (song_id: string) => void;
+  playThisSong: (song_id: string, context: string) => void;
   currentSong: string;
   elapsedTime: any;
+  context: string;
 }
 
 const theme = createMuiTheme({
@@ -36,6 +37,7 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
   playThisSong,
   currentSong,
   elapsedTime,
+  context,
 }) => {
   const [isSongSaved, setSavedSong] = useState<any[]>([]);
   const songIds = songs.map((song) => song.id);
@@ -48,6 +50,7 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
         playThisSong={playThisSong}
         currentSong={currentSong}
         elapsedTime={elapsedTime}
+        context={context}
       ></AlbumSong>
     );
   });
