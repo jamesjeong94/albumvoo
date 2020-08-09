@@ -22,6 +22,20 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
       <p>
         {currentTime}:{totalTime}
       </p>
+      <button
+        onClick={() => {
+          console.log('Previous');
+        }}
+      >
+        {'<'}
+      </button>
+      <button
+        onClick={() => {
+          console.log('Next');
+        }}
+      >
+        {'>'}
+      </button>
     </div>
   );
 };

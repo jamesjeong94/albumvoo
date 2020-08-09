@@ -2,7 +2,7 @@ import { PLAY_SONG, ADD_SONG_TO_QUEUE } from '../constants/streamConstants';
 import { PlayerActionTypes } from '../types/player';
 
 const initialState = {
-  song: '',
+  currentSong: { song: '', context: '' },
   queue: [],
 };
 
