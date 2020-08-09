@@ -9,6 +9,7 @@ import {
   Collapse,
   Box,
 } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FavoriteWidget from './FavoriteWidget';
 
 interface AlbumSongProps {
@@ -18,6 +19,16 @@ interface AlbumSongProps {
   elapsedTime: any;
 }
 
+const theme = createMuiTheme({
+  overrides: {
+    MuiTableCell: {
+      root: {
+        backgroundColor: 'lightblue',
+      },
+    },
+  },
+});
+
 const AlbumSong: React.FC<AlbumSongProps> = ({
   info,
   playThisSong,
@@ -25,9 +36,23 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
   elapsedTime,
 }) => {
   const isThisSongBeingPlayed = currentSong === info.uri;
-
   const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
   console.log(percentage);
+  const progressBar = isThisSongBeingPlayed ? (
+    <TableRow>
+      <TableCell colSpan={6}>
+        <div style={{ border: '1px solid black', height: '5px' }}>
+          <div
+            style={{
+              backgroundColor: 'lightgrey',
+              width: `${percentage}%`,
+              height: '5px',
+            }}
+          ></div>
+        </div>
+      </TableCell>
+    </TableRow>
+  ) : null;
   const artists = info.artists
     .reduce((acc: any[], curr: any) => {
       acc.push(curr.name);
@@ -36,22 +61,25 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
     .join(', ');
 
   let duration = moment.utc(info.duration_ms).format('mm:ss');
+
   return (
-    <TableRow
-      hover={true}
-      onClick={() => {
-        playThisSong(info.uri);
-      }}
-      style={{ backgroundColor: 'lightgrey', width: `${percentage}%` }}
-    >
-      <TableCell>
-        <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
-      </TableCell>
-      <TableCell>{info.track_number}</TableCell>
-      <TableCell>{info.name}</TableCell>
-      <TableCell>{artists}</TableCell>
-      <TableCell>{duration}</TableCell>
-    </TableRow>
+    <>
+      <TableRow
+        hover={true}
+        onClick={() => {
+          playThisSong(info.uri);
+        }}
+      >
+        <TableCell>
+          <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
+        </TableCell>
+        <TableCell>{info.track_number}</TableCell>
+        <TableCell>{info.name}</TableCell>
+        <TableCell>{artists}</TableCell>
+        <TableCell>{duration}</TableCell>
+      </TableRow>
+      {progressBar}
+    </>
   );
 };
 
