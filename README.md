@@ -8,6 +8,7 @@ This application serves as a spotify-portal where users can see their favorite a
 
 - TypeScript
 - React
+- Redux
 - React Router
 - Material-UI
 

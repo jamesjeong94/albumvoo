@@ -11,6 +11,7 @@ import {
 import { Favorite, FavoriteBorder } from '@material-ui/icons';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import AlbumSong from './AlbumSong';
+import { AlbumSongType } from '../../types/player';
 
 interface AlbumSongListProps {
   songs: any[];

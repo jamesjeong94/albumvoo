@@ -2,6 +2,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { playSong } from '../../actions/streamActions';
 import AlbumSongList from './AlbumSongList';
+import { AlbumSongType } from '../../types/player';
 
 interface StateProps {
   currentSong: string;
@@ -10,7 +11,7 @@ interface StateProps {
 
 const mapStateToProps = (state: any): StateProps => {
   return {
-    currentSong: state.stream.currentSong,
+    currentSong: state.stream.currentSong.song,
     elapsedTime: state.player.elapsedTime,
   };
 };

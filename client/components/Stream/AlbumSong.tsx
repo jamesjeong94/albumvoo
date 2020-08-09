@@ -1,16 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import {
-  Table,
-  TableRow,
-  TableCell,
-  TableHead,
-  TableBody,
-  Collapse,
-  Box,
-} from '@material-ui/core';
+import { TableRow, TableCell } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FavoriteWidget from './FavoriteWidget';
+import { AlbumSongType } from '../../types/player';
 
 interface AlbumSongProps {
   playThisSong: (song_id: string, context: string) => void;
