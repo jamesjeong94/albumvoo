@@ -59,7 +59,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const [previousTracks, setPreviousTracks] = useState([]);
   const [status, setStatus] = useState('STATUS.IDLE');
   const [track, setTrack] = useState(emptyTrack);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolumeOnDashboard] = useState(0.75);
 
   const initializePlayer = () => {
     player = new (window as any).Spotify.Player({
@@ -183,6 +183,27 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     setTrack(current_track);
   };
 
+  //Update the position of time elapsed
+  const updateCurrentProgress = async () => {
+    if (player) {
+      const state = (await player.getCurrentState()) as IWebPlaybackState;
+      if (state) {
+        const position = state.position / state.track_window.current_track.duration_ms;
+        setElapsed(state.position); //local ellapsed state
+        currentElapsed(state.position); //global ellapsed state
+      }
+    }
+  };
+
+  //Set album image for track
+  const setAlbumImage = (album: IWebPlaybackAlbum): string => {
+    const width = Math.max(...album.images.map((d) => d.width));
+    const thumb: IWebPlaybackImage =
+      album.images.find((d) => d.width === width) || ({} as IWebPlaybackImage);
+
+    return thumb.url;
+  };
+
   //toggle time ellapsed interval
   const handlePlaybackStatus = () => {
     if (isPlaying) {
@@ -200,27 +221,32 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     }
   };
 
-  //Update the position of time elapsed
-  const updateCurrentProgress = async () => {
-    if (player) {
-      const state = (await player.getCurrentState()) as IWebPlaybackState;
-      if (state) {
-        const position = state.position / state.track_window.current_track.duration_ms;
-        setElapsed(state.position); //local ellapsed state
-        currentElapsed(state.position); //global ellapsed state
-      }
+  const handlePlayerErrors = (type: string, message: string) => {};
+
+  const handleClickNext = async (): Promise<void> => {
+    try {
+      await next(access_token);
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const setAlbumImage = (album: IWebPlaybackAlbum): string => {
-    const width = Math.max(...album.images.map((d) => d.width));
-    const thumb: IWebPlaybackImage =
-      album.images.find((d) => d.width === width) || ({} as IWebPlaybackImage);
-
-    return thumb.url;
+  const handleClickPrevious = async (): Promise<void> => {
+    try {
+      await previous(access_token);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handlePlayerErrors = (type: string, message: string) => {};
+  const handleVolumeChange = async (number: any): Promise<void> => {
+    try {
+      await setVolumeOnDashboard(number);
+      await setVolume(number, access_token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <TestDashboard
@@ -228,6 +254,10 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       currentTime={elapsed / 1000}
       totalTime={track.durationMs / 1000}
       currentTrack={track}
+      handleClickNext={handleClickNext}
+      handleClickPrevious={handleClickPrevious}
+      volume={volume}
+      handleVolumeChange={handleVolumeChange}
     ></TestDashboard>
   );
 };

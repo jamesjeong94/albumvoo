@@ -1,10 +1,15 @@
 import React from 'react';
+import Slider from '@material-ui/core/Slider';
 
 interface TestDashboardProps {
   togglePlay: () => void;
   currentTime: number;
   totalTime: number;
   currentTrack: any;
+  handleClickNext: () => void;
+  handleClickPrevious: () => void;
+  handleVolumeChange: (volume: number | number[]) => void;
+  volume: number;
 }
 
 const TestDashboard: React.FC<TestDashboardProps> = ({
@@ -12,6 +17,10 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   currentTime,
   totalTime,
   currentTrack,
+  handleClickNext,
+  handleClickPrevious,
+  handleVolumeChange,
+  volume,
 }) => {
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
@@ -24,18 +33,27 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
       </p>
       <button
         onClick={() => {
-          console.log('Previous');
+          handleClickPrevious();
         }}
       >
         {'<'}
       </button>
       <button
         onClick={() => {
-          console.log('Next');
+          handleClickNext();
         }}
       >
         {'>'}
       </button>
+      <Slider
+        defaultValue={volume}
+        value={volume}
+        onChange={() => {}}
+        onChangeCommitted={(event, newValue) => {
+          handleVolumeChange(newValue);
+        }}
+        aria-labelledby="continuous-slider"
+      ></Slider>
     </div>
   );
 };
