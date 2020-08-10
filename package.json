@@ -7,7 +7,8 @@
     "test": "jest",
     "tsc": "tsc",
     "start": "nodemon exec",
-    "build-dev": "webpack --watch --config webpack.dev.js"
+    "build-dev": "webpack --watch --config webpack.dev.js",
+    "total-lines": "git ls-files | xargs wc -l"
   },
   "author": "",
   "license": "ISC",

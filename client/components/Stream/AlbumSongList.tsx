@@ -72,10 +72,10 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>
+                    <TableCell align={'center'}>
                       <FavoriteBorder fontSize="small"></FavoriteBorder>
                     </TableCell>
-                    <TableCell>No.</TableCell>
+                    <TableCell align={'center'}>No.</TableCell>
                     <TableCell>Song</TableCell>
                     <TableCell>Artist</TableCell>
                     <TableCell>Duration</TableCell>

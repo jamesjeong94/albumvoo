@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
-import { TableRow, TableCell } from '@material-ui/core';
+import { TableRow, TableCell, IconButton, Icon } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FavoriteWidget from './FavoriteWidget';
-import { AlbumSongType } from '../../types/player';
+import { PlayCircleOutline } from '@material-ui/icons';
 
 interface AlbumSongProps {
   playThisSong: (song_id: string, context: string, index: number) => void;
@@ -32,6 +32,8 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
   context,
   handleClickForAlbumTracks,
 }) => {
+  const [isHovered, toggleIsHovered] = useState<boolean>(false);
+
   const isThisSongBeingPlayed = currentSong === info.uri;
   const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
   const progressBar = isThisSongBeingPlayed ? (
@@ -58,19 +60,40 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
 
   let duration = moment.utc(info.duration_ms).format('mm:ss');
 
+  const handleMouseEnter = () => {
+    toggleIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    toggleIsHovered(false);
+  };
+
+  const toggledPlayButton = isHovered ? (
+    <IconButton
+      onClick={() => {
+        playThisSong(info.uri, context, info.track_number - 1);
+        handleClickForAlbumTracks();
+      }}
+    >
+      <PlayCircleOutline fontSize="small"> </PlayCircleOutline>
+    </IconButton>
+  ) : (
+    info.track_number
+  );
+
   return (
     <>
       <TableRow
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         hover={true}
-        onClick={() => {
-          playThisSong(info.uri, context, info.track_number - 1);
-          handleClickForAlbumTracks();
-        }}
       >
-        <TableCell>
+        <TableCell align={'center'}>
           <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
         </TableCell>
-        <TableCell>{info.track_number}</TableCell>
+        <TableCell size={'small'} align={'center'}>
+          {toggledPlayButton}
+        </TableCell>
         <TableCell>{info.name}</TableCell>
         <TableCell>{artists}</TableCell>
         <TableCell>{duration}</TableCell>

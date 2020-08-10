@@ -6,17 +6,23 @@
   background-color: red;
 }
 
-.SpotifyPlayer {
-  left: 0;
-  bottom: 0;
-  position: absolute;
-  width: 100%;
-  clear: both;
-}
-
 .StreamList {
   position: absolute;
   overflow-y: scroll;
   height: 80%;
   width: 100%;
+}
+
+.VolumeSlider {
+  width: 200px;
+}
+
+.SpotifyPlayer {
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  clear: both;
 }

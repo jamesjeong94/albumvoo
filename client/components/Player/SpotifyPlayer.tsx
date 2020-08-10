@@ -66,6 +66,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const [status, setStatus] = useState('STATUS.IDLE');
   const [track, setTrack] = useState(emptyTrack);
   const [volume, setVolumeOnDashboard] = useState(0.75);
+  const [autoPlay, setAutoPlay] = useState<boolean>(false);
 
   const initializePlayer = () => {
     player = new (window as any).Spotify.Player({
@@ -269,6 +270,10 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     }
   };
 
+  const handleAutoPlay = () => {
+    setAutoPlay(!autoPlay);
+  };
+
   return (
     <TestDashboard
       togglePlay={togglePlay}
@@ -279,6 +284,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       handleClickPrevious={handleClickPrevious}
       volume={volume}
       handleVolumeChange={handleVolumeChange}
+      autoPlay={autoPlay}
+      handleAutoPlay={handleAutoPlay}
     ></TestDashboard>
   );
 };
