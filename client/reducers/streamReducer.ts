@@ -1,9 +1,9 @@
-import { PLAY_SONG, ADD_SONG_TO_QUEUE } from '../constants/streamConstants';
+import { PLAY_SONG, SET_CURRENT_ALBUM_TRACKS } from '../constants/streamConstants';
 import { PlayerActionTypes } from '../types/player';
 
 const initialState = {
-  currentSong: { song: '', context: '' },
-  queue: [],
+  currentSong: { song: '', context: '', index: 0 },
+  albumTracks: [],
 };
 
 const streamReducer = (state = initialState, action: PlayerActionTypes) => {
@@ -13,11 +13,10 @@ const streamReducer = (state = initialState, action: PlayerActionTypes) => {
         ...state,
         currentSong: action.payload,
       };
-    case ADD_SONG_TO_QUEUE:
-      let newQueue = [...state.queue, action.payload];
+    case SET_CURRENT_ALBUM_TRACKS:
       return {
         ...state,
-        queue: newQueue,
+        albumTracks: action.payload,
       };
     default:
       return state;

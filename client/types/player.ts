@@ -2,9 +2,15 @@ export type Song = string;
 
 export type Context = string;
 
+export interface AlbumTracksAction {
+  type: string;
+  albumTracks: string[];
+}
+
 export interface AlbumSongType {
   song: Song;
   context: Context;
+  index: number;
 }
 
 export interface PlaySongAction {
@@ -12,22 +18,25 @@ export interface PlaySongAction {
   payload: AlbumSongType;
 }
 
-export interface QueueSongAction {
-  type: string;
-  payload: Song;
-}
-
-export interface DequeueSongAction {
-  type: string;
-  payload: null;
-}
-
 export interface CurrentElaspedTimeAction {
   type: string;
   payload: number;
 }
 
-export type PlayerActionTypes = PlaySongAction | QueueSongAction | DequeueSongAction;
+export interface PlayNextSongAction {
+  type: string;
+  payload: string;
+}
+
+export interface SetCurrentAlbumTracksAction {
+  type: string;
+  payload: any[];
+}
+
+export type PlayerActionTypes =
+  | PlaySongAction
+  | PlayNextSongAction
+  | SetCurrentAlbumTracksAction;
 
 export interface PlayerState {
   song: Song;

@@ -20,7 +20,12 @@ import TestDashboard from './TestDashboard';
 interface SpotifyPlayerProps {
   song: string;
   context: string;
-  currentElapsed: (elaspedTime: number) => void;
+  elapsedTime: number;
+  setCurrentElapsed: (elaspedTime: number) => void;
+  setCurrentSong: (song: string, context: string, index: number) => void;
+  index: number;
+  albumTracks: any[];
+  playThisSong: (song_id: string, context: string, index: number) => void;
 }
 
 var player: any;
@@ -28,9 +33,14 @@ var playerProgressInterval: any;
 var isMounted: boolean = false;
 
 const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
+  playThisSong,
   song,
   context,
-  currentElapsed,
+  elapsedTime,
+  setCurrentElapsed,
+  setCurrentSong,
+  index,
+  albumTracks,
 }) => {
   //initialize constants
   const progressUpdateInterval = 100;
@@ -51,12 +61,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const [errorType, setErrorType] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [isInitializing, setIsInitializing] = useState(false);
-  const [isMagnified, setIsMagnified] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [nextTracks, setNextTracks] = useState([]);
-  const [elapsed, setElapsed] = useState(0);
-  const [previousTracks, setPreviousTracks] = useState([]);
   const [status, setStatus] = useState('STATUS.IDLE');
   const [track, setTrack] = useState(emptyTrack);
   const [volume, setVolumeOnDashboard] = useState(0.75);
@@ -96,7 +102,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   //When song changes
   useEffect(() => {
     if (isMounted) {
-      playNewSong();
+      playNewOrReplaySong();
     }
   }, [song]);
 
@@ -122,7 +128,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       await play(
         {
           uris: [song],
-          position_ms: elapsed,
+          position_ms: elapsedTime,
           deviceId: currentDeviceId,
           context_uri: context,
         },
@@ -136,7 +142,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   };
 
   //Play new song function
-  const playNewSong = async () => {
+  const playNewOrReplaySong = async () => {
     await play({ uris: [song], position_ms: 0, deviceId: currentDeviceId }, access_token);
     setIsPlaying(true);
   };
@@ -189,8 +195,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       const state = (await player.getCurrentState()) as IWebPlaybackState;
       if (state) {
         const position = state.position / state.track_window.current_track.duration_ms;
-        setElapsed(state.position); //local ellapsed state
-        currentElapsed(state.position); //global ellapsed state
+        setCurrentElapsed(state.position); //global ellapsed state
       }
     }
   };
@@ -221,11 +226,18 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     }
   };
 
-  const handlePlayerErrors = (type: string, message: string) => {};
+  const handlePlayerErrors = (type: string, message: string) => {
+    console.log(message);
+  };
 
   const handleClickNext = async (): Promise<void> => {
     try {
-      await next(access_token);
+      if (index + 1 < albumTracks.length) {
+        playThisSong(albumTracks[index + 1].uri, context, index + 1);
+      } else {
+        await setCurrentElapsed(0);
+        playNewOrReplaySong();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -233,7 +245,16 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
 
   const handleClickPrevious = async (): Promise<void> => {
     try {
-      await previous(access_token);
+      if (elapsedTime / 1000 > 3) {
+        await setCurrentElapsed(0);
+        playNewOrReplaySong();
+      } else {
+        if (index - 1 >= 0) {
+          playThisSong(albumTracks[index - 1].uri, context, index - 1);
+        } else {
+          playNewOrReplaySong();
+        }
+      }
     } catch (err) {
       console.log(err);
     }
@@ -251,7 +272,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   return (
     <TestDashboard
       togglePlay={togglePlay}
-      currentTime={elapsed / 1000}
+      currentTime={elapsedTime / 1000}
       totalTime={track.durationMs / 1000}
       currentTrack={track}
       handleClickNext={handleClickNext}

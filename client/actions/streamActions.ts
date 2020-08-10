@@ -1,16 +1,20 @@
-import { PLAY_SONG, ADD_SONG_TO_QUEUE } from '../constants/streamConstants';
+import { PLAY_SONG, SET_CURRENT_ALBUM_TRACKS } from '../constants/streamConstants';
 import { PlayerActionTypes, Song, Context } from '../types/player';
 
-export const playSong = (song: Song, context: Context): PlayerActionTypes => {
+export const playSong = (
+  song: Song,
+  context: Context,
+  index: number
+): PlayerActionTypes => {
   return {
     type: PLAY_SONG,
-    payload: { song, context },
+    payload: { song, context, index },
   };
 };
 
-export const queueSong = (song: Song): PlayerActionTypes => {
+export const setCurrentAlbumTracks = (album: any[]): PlayerActionTypes => {
   return {
-    type: ADD_SONG_TO_QUEUE,
-    payload: song,
+    type: SET_CURRENT_ALBUM_TRACKS,
+    payload: album,
   };
 };

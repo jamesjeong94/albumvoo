@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { playSong } from '../../actions/streamActions';
+import { playSong, setCurrentAlbumTracks } from '../../actions/streamActions';
 import AlbumSongList from './AlbumSongList';
-import { AlbumSongType } from '../../types/player';
 
 interface StateProps {
   currentSong: string;
@@ -18,8 +17,11 @@ const mapStateToProps = (state: any): StateProps => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    playThisSong: (song_id: string, context: string): void => {
-      dispatch(playSong(song_id, context));
+    playThisSong: (song_id: string, context: string, index: number): void => {
+      dispatch(playSong(song_id, context, index));
+    },
+    setCurrentAlbumTracks: (currentAlbum: any[]) => {
+      dispatch(setCurrentAlbumTracks(currentAlbum));
     },
   };
 };
@@ -43,6 +45,7 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
   currentSong,
   elapsedTime,
   context,
+  setCurrentAlbumTracks,
 }) => {
   return (
     <AlbumSongList
@@ -52,6 +55,7 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
       songs={songs}
       open={open}
       playThisSong={playThisSong}
+      setCurrentAlbumTracks={setCurrentAlbumTracks}
     ></AlbumSongList>
   );
 };

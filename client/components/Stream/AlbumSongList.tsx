@@ -16,10 +16,11 @@ import { AlbumSongType } from '../../types/player';
 interface AlbumSongListProps {
   songs: any[];
   open: boolean;
-  playThisSong: (song_id: string, context: string) => void;
+  playThisSong: (song_id: string, context: string, index: number) => void;
   currentSong: string;
   elapsedTime: any;
   context: string;
+  setCurrentAlbumTracks: (album: any[]) => void;
 }
 
 const theme = createMuiTheme({
@@ -39,9 +40,14 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
   currentSong,
   elapsedTime,
   context,
+  setCurrentAlbumTracks,
 }) => {
   const [isSongSaved, setSavedSong] = useState<any[]>([]);
   const songIds = songs.map((song) => song.id);
+
+  const handleClickForAlbumTracks = () => {
+    setCurrentAlbumTracks(songs);
+  };
 
   const albumSongs = songs.map((song) => {
     return (
@@ -52,6 +58,7 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
         currentSong={currentSong}
         elapsedTime={elapsedTime}
         context={context}
+        handleClickForAlbumTracks={handleClickForAlbumTracks}
       ></AlbumSong>
     );
   });

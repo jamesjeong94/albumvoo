@@ -6,11 +6,12 @@ import FavoriteWidget from './FavoriteWidget';
 import { AlbumSongType } from '../../types/player';
 
 interface AlbumSongProps {
-  playThisSong: (song_id: string, context: string) => void;
+  playThisSong: (song_id: string, context: string, index: number) => void;
   info: any;
   currentSong: string;
   elapsedTime: any;
   context: string;
+  handleClickForAlbumTracks: () => void;
 }
 
 const theme = createMuiTheme({
@@ -29,6 +30,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
   currentSong,
   elapsedTime,
   context,
+  handleClickForAlbumTracks,
 }) => {
   const isThisSongBeingPlayed = currentSong === info.uri;
   const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
@@ -61,7 +63,8 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
       <TableRow
         hover={true}
         onClick={() => {
-          playThisSong(info.uri, context);
+          playThisSong(info.uri, context, info.track_number - 1);
+          handleClickForAlbumTracks();
         }}
       >
         <TableCell>
