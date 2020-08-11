@@ -12,7 +12,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ rerouteLink }) => {
     <div>
       <p>Landing page pls</p>
       <div>
-        <a href={`${HOST}${rerouteLink}`}>Login</a>
+        <a id="login" href={`${HOST}${rerouteLink}`}>
+          Login
+        </a>
       </div>
     </div>
   );
