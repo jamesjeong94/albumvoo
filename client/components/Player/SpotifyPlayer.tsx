@@ -228,6 +228,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   };
 
   const handlePlayerErrors = (type: string, message: string) => {
+    console.log(type);
     console.log(message);
   };
 

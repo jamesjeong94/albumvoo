@@ -14,7 +14,7 @@ const app: express.Application = express();
 const PORT: string | number = process.env.PORT || 3000;
 const HOST: string = process.env.HOST || 'http://localhost:3000';
 
-const publicDir = express.static(path.resolve(__dirname, '../client/public'));
+const publicDir = express.static(path.resolve(__dirname, '../public'));
 
 app
   .use(morgan('combined'))
@@ -22,10 +22,14 @@ app
   .use(cookieParser());
 app.use('/spotify', spotifyRouter);
 app.use(publicDir);
-app.use('/main', authChecker);
+// app.use('/main', authChecker);
+
+app.get('/main', authChecker, (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 app.listen(PORT, () => {

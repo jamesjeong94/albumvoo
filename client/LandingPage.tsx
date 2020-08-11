@@ -1,14 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-interface LandingPageProps {}
+const HOST = `http://localhost:3000`;
 
-const LandingPage: React.FC<LandingPageProps> = ({}) => {
+interface LandingPageProps {
+  rerouteLink: string;
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ rerouteLink }) => {
   return (
     <div>
       <p>Landing page pls</p>
       <div>
-        <Link to="/main">Login</Link>
+        <a href={`${HOST}${rerouteLink}`}>Login</a>
       </div>
     </div>
   );

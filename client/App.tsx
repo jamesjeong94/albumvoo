@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { getCookieValue } from './util';
+
 import SpotifyPlayer from './components/Player/SpotifyPlayer';
 import ItemList from './components/ItemList';
 import StreamList from './components/Stream/StreamList';
@@ -10,6 +12,14 @@ const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
   const [topArtists, setTopArtists] = useState<any[]>([]);
   const [recentAlbums, setRecentAlbums] = useState<any[]>([]);
+
+  axios.interceptors.request.use((config) => {
+    let access_token = getCookieValue('access_token');
+    if (!access_token) {
+      console.log('no access token');
+    }
+    return config;
+  });
 
   const getUserData = () => {
     axios({
@@ -34,7 +44,9 @@ const App: React.FC = () => {
     axios({
       method: 'get',
       url: 'http://localhost:3000/spotify/recent',
-    }).then(({ data }) => {
+    }).then((response) => {
+      let { data } = response;
+      console.log('response', response);
       setRecentAlbums(data);
     });
   };

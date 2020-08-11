@@ -54,6 +54,7 @@ export = {
   },
   refreshToken: (req: any, res: any) => {
     const code: any = req.query.code;
+
     axios({
       method: 'POST',
       url: `https://accounts.spotify.com/api/token`,

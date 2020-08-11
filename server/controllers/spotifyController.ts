@@ -45,29 +45,32 @@ export = {
       method: 'get',
       url: `https://api.spotify.com/v1/me/top/artists`,
       headers: generateAuthHeader({}, req.cookies),
-    }).then(({ data }) => {
-      const artists = data.items.map((artist: any) => {
-        let endPt = `https://api.spotify.com/v1/artists/${artist.id}/albums`;
-        return axios({
-          method: 'get',
-          url: endPt,
-          headers: generateAuthHeader({}, req.cookies),
-        }).then(({ data }) => data.items);
-      });
-      return axios
-        .all(artists)
-        .then((data: any) => {
+    })
+      .then(({ data }) => {
+        const artists = data.items.map((artist: any) => {
+          let endPt = `https://api.spotify.com/v1/artists/${artist.id}/albums`;
+          return axios({
+            method: 'get',
+            url: endPt,
+            headers: generateAuthHeader({}, req.cookies),
+          }).then(({ data }) => data.items);
+        });
+        return axios.all(artists).then((data: any) => {
           let formattedData = data.reduce((acc: any[], curr: any[]) => {
             acc.push(...curr);
             return acc;
           }, []);
           formattedData = sortByDate(removeDuplicates(formattedData));
           res.send(formattedData);
-        })
-        .catch((err) => {
-          console.log(err);
         });
-    });
+      })
+      .catch((err) => {
+        console.log('err at recent');
+        console.log(err);
+        if (err.response.status === 401) {
+          res.redirect(`${HOST}/spotify/auth/refresh`);
+        }
+      });
   },
   getAlbumSongs: (req: any, res: any) => {
     let id = req.query.album_id;

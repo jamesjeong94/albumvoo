@@ -1,4 +1,10 @@
 import { IPlayOptions } from './types/spotify';
+import { getCookieValue } from './util';
+
+const handleExpiredToken = () => {
+  const refresh_token = getCookieValue('refresh_token');
+  console.log('refresh token ', refresh_token);
+};
 
 export async function checkTracksStatus(tracks: string | string[], token: string) {
   const ids = Array.isArray(tracks) ? tracks : [tracks];
@@ -9,7 +15,12 @@ export async function checkTracksStatus(tracks: string | string[], token: string
       'Content-Type': 'application/json',
     },
     method: 'GET',
-  }).then((d) => d.json());
+  })
+    .then((d) => d.json())
+    .catch((err) => {
+      console.log(err);
+      handleExpiredToken();
+    });
 }
 
 export async function getDevices(token: string) {
@@ -19,7 +30,12 @@ export async function getDevices(token: string) {
       'Content-Type': 'application/json',
     },
     method: 'GET',
-  }).then((d) => d.json());
+  })
+    .then((d) => d.json())
+    .catch((err) => {
+      console.log(err);
+      handleExpiredToken();
+    });
 }
 
 export async function getPlaybackState(token: string) {
@@ -29,13 +45,18 @@ export async function getPlaybackState(token: string) {
       'Content-Type': 'application/json',
     },
     method: 'GET',
-  }).then((d) => {
-    if (d.status === 204) {
-      return;
-    }
+  })
+    .then((d) => {
+      if (d.status === 204) {
+        return;
+      }
 
-    return d.json();
-  });
+      return d.json();
+    })
+    .catch((err) => {
+      console.log(err);
+      handleExpiredToken();
+    });
 }
 
 export async function pause(token: string) {
@@ -45,6 +66,9 @@ export async function pause(token: string) {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -74,6 +98,9 @@ export async function play(
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -84,6 +111,9 @@ export async function previous(token: string) {
       'Content-Type': 'application/json',
     },
     method: 'POST',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -94,6 +124,9 @@ export async function next(token: string) {
       'Content-Type': 'application/json',
     },
     method: 'POST',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -107,6 +140,9 @@ export async function removeTracks(tracks: string | string[], token: string) {
       'Content-Type': 'application/json',
     },
     method: 'DELETE',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -120,6 +156,9 @@ export async function saveTracks(tracks: string | string[], token: string) {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -130,6 +169,9 @@ export async function seek(position: number, token: string) {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -141,6 +183,9 @@ export async function setDevice(deviceId: string, token: string) {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
 
@@ -151,5 +196,8 @@ export async function setVolume(volume: number, token: string) {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
+  }).catch((err) => {
+    console.log(err);
+    handleExpiredToken();
   });
 }
