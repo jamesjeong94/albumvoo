@@ -11,6 +11,7 @@ export interface AlbumSongType {
   song: Song;
   context: Context;
   index: number;
+  elapsed: number;
 }
 
 export interface PlaySongAction {

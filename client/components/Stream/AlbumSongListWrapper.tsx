@@ -17,8 +17,13 @@ const mapStateToProps = (state: any): StateProps => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    playThisSong: (song_id: string, context: string, index: number): void => {
-      dispatch(playSong(song_id, context, index));
+    playThisSong: (
+      song_id: string,
+      context: string,
+      index: number,
+      elapsed: number
+    ): void => {
+      dispatch(playSong(song_id, context, index, elapsed));
     },
     setCurrentAlbumTracks: (currentAlbum: any[]) => {
       dispatch(setCurrentAlbumTracks(currentAlbum));

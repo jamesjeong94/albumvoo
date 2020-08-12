@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 interface IScriptAttributes {
   async?: boolean;
   defer?: boolean;
@@ -41,3 +43,7 @@ export function loadScript(attributes: IScriptAttributes): Promise<any> {
     }
   });
 }
+
+export const timeToReadable = (duration: number) => {
+  return moment.utc(duration).format('mm:ss');
+};

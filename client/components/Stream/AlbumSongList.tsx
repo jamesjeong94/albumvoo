@@ -16,7 +16,12 @@ import { AlbumSongType } from '../../types/player';
 interface AlbumSongListProps {
   songs: any[];
   open: boolean;
-  playThisSong: (song_id: string, context: string, index: number) => void;
+  playThisSong: (
+    song_id: string,
+    context: string,
+    index: number,
+    elapsed: number
+  ) => void;
   currentSong: string;
   elapsedTime: any;
   context: string;

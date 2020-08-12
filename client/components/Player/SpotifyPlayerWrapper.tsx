@@ -19,11 +19,13 @@ const mapDispatchToProps = (dispatch: any) => {
     setCurrentElapsed: (elaspedTime: number) => {
       dispatch(setCurrentElapsed(elaspedTime));
     },
-    setCurrentSong: (song: string, context: string, index: number) => {
-      dispatch(playSong(song, context, index));
-    },
-    playThisSong: (song_id: string, context: string, index: number): void => {
-      dispatch(playSong(song_id, context, index));
+    playThisSong: (
+      song_id: string,
+      context: string,
+      index: number,
+      elapsed: number
+    ): void => {
+      dispatch(playSong(song_id, context, index, elapsed));
     },
   };
 };
@@ -39,7 +41,6 @@ const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({
   elapsedTime,
   setCurrentElapsed,
   context,
-  setCurrentSong,
   index,
   albumTracks,
   playThisSong,
@@ -49,7 +50,6 @@ const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({
       song={song}
       context={context}
       setCurrentElapsed={setCurrentElapsed}
-      setCurrentSong={setCurrentSong}
       index={index}
       albumTracks={albumTracks}
       playThisSong={playThisSong}

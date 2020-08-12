@@ -1,4 +1,5 @@
 import React from 'react';
+import { timeToReadable } from '../../util';
 import { Slider, Checkbox, FormControlLabel } from '@material-ui/core';
 
 interface TestDashboardProps {
@@ -12,6 +13,8 @@ interface TestDashboardProps {
   volume: number;
   autoPlay: boolean;
   handleAutoPlay: () => void;
+  setCurrentElapsed: (elaspedTime: number) => void;
+  handlePlaybackSliderChange: (position: number) => void;
 }
 
 const TestDashboard: React.FC<TestDashboardProps> = ({
@@ -25,6 +28,8 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   volume,
   autoPlay,
   handleAutoPlay,
+  setCurrentElapsed,
+  handlePlaybackSliderChange,
 }) => {
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
@@ -32,9 +37,6 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
       <div>
         <p>
           {currentTrack.name} by {currentTrack.artists}
-        </p>
-        <p>
-          {currentTime}:{totalTime}
         </p>
       </div>
       <button
@@ -74,6 +76,15 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
         label="Autoplay"
         labelPlacement="end"
       />
+      {timeToReadable(currentTime)}
+      <Slider
+        value={(currentTime * 100) / totalTime}
+        onChangeCommitted={(event, newValue: any) => {
+          handlePlaybackSliderChange(newValue);
+          setCurrentElapsed((newValue * totalTime) / 100);
+        }}
+      />
+      {timeToReadable(totalTime)}
     </div>
   );
 };

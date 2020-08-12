@@ -22,10 +22,14 @@ interface SpotifyPlayerProps {
   context: string;
   elapsedTime: number;
   setCurrentElapsed: (elaspedTime: number) => void;
-  setCurrentSong: (song: string, context: string, index: number) => void;
   index: number;
   albumTracks: any[];
-  playThisSong: (song_id: string, context: string, index: number) => void;
+  playThisSong: (
+    song_id: string,
+    context: string,
+    index: number,
+    elapsed: number
+  ) => void;
 }
 
 var player: any;
@@ -38,12 +42,11 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   context,
   elapsedTime,
   setCurrentElapsed,
-  setCurrentSong,
   index,
   albumTracks,
 }) => {
   //initialize constants
-  const progressUpdateInterval = 100;
+  const progressUpdateInterval = 75;
   const emptyTrack = {
     artists: '',
     durationMs: 0,
@@ -111,6 +114,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     handleCheckForEndOfSong();
   }, [elapsedTime]);
 
+  useEffect(() => {});
+
   //When isPlaying is toggled
   useEffect(() => {
     handlePlaybackStatus();
@@ -174,7 +179,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
 
   const handleCheckForEndOfSong = async () => {
     let currentState = await (player as any).getCurrentState();
-    console.log(autoPlay, currentState.duration - elapsedTime);
     if (
       autoPlay === true &&
       currentState.duration - elapsedTime <= progressUpdateInterval
@@ -256,7 +260,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const handleClickNext = async (): Promise<void> => {
     try {
       if (index + 1 < albumTracks.length) {
-        playThisSong(albumTracks[index + 1].uri, context, index + 1);
+        playThisSong(albumTracks[index + 1].uri, context, index + 1, 0);
       } else {
         await setCurrentElapsed(0);
         playNewOrReplaySong();
@@ -273,7 +277,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
         playNewOrReplaySong();
       } else {
         if (index - 1 >= 0) {
-          playThisSong(albumTracks[index - 1].uri, context, index - 1);
+          playThisSong(albumTracks[index - 1].uri, context, index - 1, 0);
         } else {
           playNewOrReplaySong();
         }
@@ -296,11 +300,20 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     setAutoPlay(!autoPlay);
   };
 
+  const handlePlaybackSliderChange = async (position: number) => {
+    let newPosition = (position * track.durationMs) / 100;
+    await play(
+      { uris: [song], position_ms: newPosition, deviceId: currentDeviceId },
+      access_token
+    );
+    setIsPlaying(true);
+  };
+
   return (
     <TestDashboard
       togglePlay={togglePlay}
-      currentTime={elapsedTime / 1000}
-      totalTime={track.durationMs / 1000}
+      currentTime={elapsedTime}
+      totalTime={track.durationMs}
       currentTrack={track}
       handleClickNext={handleClickNext}
       handleClickPrevious={handleClickPrevious}
@@ -308,6 +321,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       handleVolumeChange={handleVolumeChange}
       autoPlay={autoPlay}
       handleAutoPlay={handleAutoPlay}
+      setCurrentElapsed={setCurrentElapsed}
+      handlePlaybackSliderChange={handlePlaybackSliderChange}
     ></TestDashboard>
   );
 };

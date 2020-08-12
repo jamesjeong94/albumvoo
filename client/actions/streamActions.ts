@@ -4,11 +4,12 @@ import { PlayerActionTypes, Song, Context } from '../types/player';
 export const playSong = (
   song: Song,
   context: Context,
-  index: number
+  index: number,
+  elapsed: number
 ): PlayerActionTypes => {
   return {
     type: PLAY_SONG,
-    payload: { song, context, index },
+    payload: { song, context, index, elapsed },
   };
 };
 

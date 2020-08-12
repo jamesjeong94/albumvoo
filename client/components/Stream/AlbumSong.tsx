@@ -6,7 +6,12 @@ import FavoriteWidget from './FavoriteWidget';
 import { PlayCircleOutline } from '@material-ui/icons';
 
 interface AlbumSongProps {
-  playThisSong: (song_id: string, context: string, index: number) => void;
+  playThisSong: (
+    song_id: string,
+    context: string,
+    index: number,
+    elapsed: number
+  ) => void;
   info: any;
   currentSong: string;
   elapsedTime: any;
@@ -71,7 +76,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
   const toggledPlayButton = isHovered ? (
     <IconButton
       onClick={() => {
-        playThisSong(info.uri, context, info.track_number - 1);
+        playThisSong(info.uri, context, info.track_number - 1, 0);
         handleClickForAlbumTracks();
       }}
     >
