@@ -17,7 +17,6 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
   const setNewPage = (event: any, newPage: any) => {
     setPage(newPage);
   };
-  console.log(items);
   const streamRows = items.slice(10 * page, 10 * (page + 1)).map((item) => {
     return <StreamRow key={item.id} item={item}></StreamRow>;
   });

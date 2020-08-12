@@ -52,16 +52,7 @@ const App: React.FC = () => {
 
   return (
     <div>
-      <Header></Header>
-      <button onClick={getUserData}>Get User Data</button>
-      <button
-        onClick={() => {
-          getTopOfUser('artists');
-        }}
-      >
-        Get Top
-      </button>
-      <button onClick={getRecentByTopArtists}>Get Recent</button>
+      <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
       <StreamList items={recentAlbums}></StreamList>
       <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
     </div>
