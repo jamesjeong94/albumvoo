@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import { getCookieValue } from './util';
 
-import SpotifyPlayer from './components/Player/SpotifyPlayer';
-import ItemList from './components/ItemList';
+import Header from './components/Header/Header';
 import StreamList from './components/Stream/StreamList';
 import SpotifyPlayerWrapper from './components/Player/SpotifyPlayerWrapper';
 
@@ -53,6 +52,7 @@ const App: React.FC = () => {
 
   return (
     <div>
+      <Header></Header>
       <button onClick={getUserData}>Get User Data</button>
       <button
         onClick={() => {

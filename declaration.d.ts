@@ -4,3 +4,8 @@ declare module '*.scss' {
 }
 
 declare module 'react-script-tag';
+
+declare module '*.png' {
+  const value: any;
+  export = value;
+}

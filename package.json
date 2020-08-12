@@ -55,6 +55,7 @@
     "codelyzer": "^6.0.0",
     "css-loader": "^4.2.0",
     "css-modules-typescript-loader": "^4.0.0",
+    "file-loader": "^6.0.0",
     "jest": "^26.2.2",
     "jest-puppeteer": "^4.4.0",
     "morgan": "^1.10.0",
