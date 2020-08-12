@@ -107,6 +107,10 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     }
   }, [song]);
 
+  useEffect(() => {
+    handleCheckForEndOfSong();
+  }, [elapsedTime]);
+
   //When isPlaying is toggled
   useEffect(() => {
     handlePlaybackStatus();
@@ -168,6 +172,18 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     setDevices(allDevices);
   };
 
+  const handleCheckForEndOfSong = async () => {
+    let currentState = await (player as any).getCurrentState();
+    console.log(autoPlay, currentState.duration - elapsedTime);
+    if (
+      autoPlay === true &&
+      currentState.duration - elapsedTime <= progressUpdateInterval
+    ) {
+      console.log('autoplaying next');
+      handleClickNext();
+    }
+  };
+
   //set state for current player state
   const handlePlayerStateChanges = async () => {
     let currentState = await (player as any).getCurrentState();
@@ -188,6 +204,12 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       uri,
     };
     setTrack(current_track);
+    if (currentState.paused) {
+      setIsPlaying(false);
+    }
+    if (!currentState.paused) {
+      setIsPlaying(true);
+    }
   };
 
   //Update the position of time elapsed
@@ -195,7 +217,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     if (player) {
       const state = (await player.getCurrentState()) as IWebPlaybackState;
       if (state) {
-        const position = state.position / state.track_window.current_track.duration_ms;
         setCurrentElapsed(state.position); //global ellapsed state
       }
     }

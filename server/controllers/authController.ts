@@ -69,11 +69,11 @@ export = {
       },
     })
       .then(({ data }) => {
+        console.log(data);
         res
           .cookie('access_token', data.access_token, {
             maxAge: data.expires_in * 1000,
           })
-          .cookie('refresh_token', data.refresh_token)
           .redirect(`${HOST}/main`);
       })
       .catch((err) => {
