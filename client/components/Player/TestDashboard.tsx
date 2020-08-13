@@ -1,6 +1,12 @@
 import React from 'react';
 import { timeToReadable } from '../../util';
-import { Slider, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Slider, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  PlayCircleOutlineRounded,
+  NavigateBeforeRounded,
+  NavigateNextRounded,
+} from '@material-ui/icons';
 
 interface TestDashboardProps {
   togglePlay: () => void;
@@ -17,6 +23,13 @@ interface TestDashboardProps {
   handlePlaybackSliderChange: (position: number) => void;
 }
 
+const useStyles = makeStyles({
+  playback: {
+    minWidth: '200px',
+    maxWidth: '40vh',
+  },
+});
+
 const TestDashboard: React.FC<TestDashboardProps> = ({
   togglePlay,
   currentTime,
@@ -31,60 +44,74 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   setCurrentElapsed,
   handlePlaybackSliderChange,
 }) => {
+  const classes = useStyles();
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
-      <button onClick={togglePlay}>Play/Pause</button>
-      <div>
+      <div className="leftOfPlayer">
         <p>
           {currentTrack.name} by {currentTrack.artists}
         </p>
       </div>
-      <button
-        onClick={() => {
-          handleClickPrevious();
-        }}
-      >
-        {'<'}
-      </button>
-      <button
-        onClick={() => {
-          handleClickNext();
-        }}
-      >
-        {'>'}
-      </button>
-      <div className="VolumeSlider">
-        <Slider
-          defaultValue={volume}
-          value={volume}
-          onChange={() => {}}
-          onChangeCommitted={(event, newValue) => {
-            handleVolumeChange(newValue);
-          }}
-          aria-labelledby="continuous-slider"
-        ></Slider>
-      </div>
-      <FormControlLabel
-        value="end"
-        control={
-          <Checkbox
-            checked={autoPlay}
-            onChange={handleAutoPlay}
-            inputProps={{ 'aria-label': 'primary checkbox' }}
+      <div className="middleOfPlayer">
+        <div className="topOfMiddle">
+          <IconButton
+            onClick={() => {
+              handleClickPrevious();
+            }}
+          >
+            <NavigateBeforeRounded></NavigateBeforeRounded>
+          </IconButton>
+          <IconButton onClick={togglePlay}>
+            <PlayCircleOutlineRounded></PlayCircleOutlineRounded>
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              handleClickNext();
+            }}
+          >
+            <NavigateNextRounded></NavigateNextRounded>
+          </IconButton>
+          <FormControlLabel
+            value="end"
+            control={
+              <Checkbox
+                checked={autoPlay}
+                onChange={handleAutoPlay}
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+            }
+            label="Autoplay"
+            labelPlacement="end"
           />
-        }
-        label="Autoplay"
-        labelPlacement="end"
-      />
-      {timeToReadable(currentTime)}
-      <Slider
-        value={(currentTime * 100) / totalTime}
-        onChangeCommitted={(event, newValue: any) => {
-          handlePlaybackSliderChange(newValue);
-          setCurrentElapsed((newValue * totalTime) / 100);
-        }}
-      />
-      {timeToReadable(totalTime)}
+        </div>{' '}
+        <div className="bottomOfMiddle">
+          <div>{timeToReadable(currentTime)}</div>
+          <div>
+            <Slider
+              className={classes.playback}
+              value={(currentTime * 100) / totalTime}
+              onChangeCommitted={(event, newValue: any) => {
+                handlePlaybackSliderChange(newValue);
+                setCurrentElapsed((newValue * totalTime) / 100);
+              }}
+            />
+          </div>
+          <div>{timeToReadable(totalTime)}</div>
+        </div>
+      </div>
+      <div className="leftOfPlayer">
+        <div className="VolumeSlider">
+          <Slider
+            defaultValue={volume}
+            value={volume}
+            onChange={() => {}}
+            onChangeCommitted={(event, newValue) => {
+              handleVolumeChange(newValue);
+            }}
+            aria-labelledby="continuous-slider"
+          ></Slider>
+        </div>
+      </div>
     </div>
   );
 };

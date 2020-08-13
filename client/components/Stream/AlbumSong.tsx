@@ -41,21 +41,22 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
 
   const isThisSongBeingPlayed = currentSong === info.uri;
   const percentage = isThisSongBeingPlayed ? (elapsedTime * 100) / info.duration_ms : 0;
-  const progressBar = isThisSongBeingPlayed ? (
-    <TableRow>
-      <TableCell colSpan={6}>
-        <div style={{ border: '1px solid black', height: '5px' }}>
-          <div
-            style={{
-              backgroundColor: 'lightgrey',
-              width: `${percentage}%`,
-              height: '5px',
-            }}
-          ></div>
-        </div>
-      </TableCell>
-    </TableRow>
-  ) : null;
+  const style = isThisSongBeingPlayed ? { backgroundColor: '#5dbcd2' } : {};
+  // const progressBar = isThisSongBeingPlayed ? (
+  //   <TableRow>
+  //     <TableCell colSpan={6}>
+  //       <div style={{ border: '1px solid black', height: '5px' }}>
+  //         <div
+  //           style={{
+  //             backgroundColor: 'lightgrey',
+  //             width: `${percentage}%`,
+  //             height: '5px',
+  //           }}
+  //         ></div>
+  //       </div>
+  //     </TableCell>
+  //   </TableRow>
+  // ) : null;
   const artists = info.artists
     .reduce((acc: any[], curr: any) => {
       acc.push(curr.name);
@@ -92,6 +93,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         hover={true}
+        style={style}
       >
         <TableCell align={'center'}>
           <FavoriteWidget isSaved={info.isSavedByUser}></FavoriteWidget>
@@ -103,7 +105,6 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
         <TableCell>{artists}</TableCell>
         <TableCell>{duration}</TableCell>
       </TableRow>
-      {progressBar}
     </>
   );
 };

@@ -14,18 +14,37 @@
 }
 
 .VolumeSlider {
-  width: 200px;
+  width: 125px;
 }
 
 .SpotifyPlayer {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   left: 0;
   bottom: 0;
   position: absolute;
   width: 100%;
   clear: both;
-  height: 5%;
+  height: 8%;
+  .leftOfPlayer {
+  }
+  .middleOfPlayer {
+    display: flex;
+    flex-direction: column;
+    .topOfMiddle {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .bottomOfMiddle {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  .rightOfPlayer {
+  }
 }
 
 .logo {

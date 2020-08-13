@@ -61,6 +61,7 @@ export = {
       data: qs.stringify({
         grant_type: 'refresh_token',
         refresh_token: req.cookies.refresh_token,
+        redirect_uri: redirect_uri,
       }),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

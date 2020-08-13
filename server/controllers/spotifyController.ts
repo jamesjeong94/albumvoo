@@ -36,6 +36,7 @@ export = {
       })
       .catch((err) => {
         if (err.response.status === 401) {
+          console.log('redirecting');
           res.redirect(`${HOST}/spotify/auth/refresh`);
         }
       });
@@ -68,6 +69,7 @@ export = {
         console.log('err at recent');
         console.log(err);
         if (err.response.status === 401) {
+          console.log('redirecting');
           res.redirect(`${HOST}/spotify/auth/refresh`);
         }
       });
@@ -103,6 +105,7 @@ export = {
       .catch((err) => {
         console.log(err);
         if (err.response.status === 401) {
+          console.log('redirecting');
           res.redirect(`${HOST}/spotify/auth/refresh`);
         }
       });

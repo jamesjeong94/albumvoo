@@ -21,14 +21,14 @@ app
   .use(cors({ credentials: true, origin: true }))
   .use(cookieParser());
 app.use('/spotify', spotifyRouter);
+app.use('/spotify', authChecker);
 app.use(publicDir);
-// app.use('/main', authChecker);
 
 app.get('/main', authChecker, (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
