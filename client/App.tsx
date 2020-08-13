@@ -51,7 +51,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="app">
       <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
       <StreamList items={recentAlbums}></StreamList>
       <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
