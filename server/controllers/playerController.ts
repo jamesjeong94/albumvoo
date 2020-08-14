@@ -34,7 +34,10 @@ const playerController = {
       },
       method: 'GET',
     })
-      .then(({ data }) => res.send(data))
+      .then(({ data }) => {
+        console.log('sending back devices');
+        res.send(data);
+      })
       .catch((err) => {
         console.log(err);
         handleExpiredToken();
@@ -63,7 +66,7 @@ const playerController = {
       });
   },
   pause: async (req: Request, res: Response) => {
-    const token = req.body.token;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player/pause`,
       headers: {
@@ -71,10 +74,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
 
   play: async (req: Request, res: Response) => {
@@ -104,10 +111,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   previous: async (req: Request, res: Response) => {
     const token = req.query.token;
@@ -118,10 +129,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   next: async (req: Request, res: Response) => {
     const token = req.query.token;
@@ -132,10 +147,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   removeTracks: async (req: Request, res: Response) => {
     const { tracks } = req.body;
@@ -149,10 +168,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'DELETE',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   saveTracks: async (req: Request, res: Response) => {
     const { tracks } = req.body;
@@ -166,10 +189,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
 
   seek: async (req: Request, res: Response) => {
@@ -182,10 +209,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   setDevice: async (req: Request, res: Response) => {
     const { deviceId } = req.body;
@@ -198,10 +229,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
   setVolume: async (req: Request, res: Response) => {
     const { volume } = req.body;
@@ -213,10 +248,14 @@ const playerController = {
         'Content-Type': 'application/json',
       },
       method: 'PUT',
-    }).catch((err) => {
-      console.log(err);
-      handleExpiredToken();
-    });
+    })
+      .then(({ data }) => {
+        res.status(200);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleExpiredToken();
+      });
   },
 };
 

@@ -43,8 +43,9 @@ export = {
         res
           .cookie('access_token', data.access_token, {
             maxAge: data.expires_in * 1000,
+            sameSite: true,
           })
-          .cookie('refresh_token', data.refresh_token)
+          .cookie('refresh_token', data.refresh_token, { sameSite: true })
           .redirect(`${HOST}/main`);
       })
       .catch((err) => {
@@ -74,6 +75,7 @@ export = {
         res
           .cookie('access_token', data.access_token, {
             maxAge: data.expires_in * 1000,
+            sameSite: true,
           })
           .redirect(`${HOST}/main`);
       })

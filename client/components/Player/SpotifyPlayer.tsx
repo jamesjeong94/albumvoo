@@ -56,6 +56,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
     uri: '',
   };
   const access_token = getCookieValue('access_token');
+  const refresh_token = getCookieValue('refresh_token');
 
   //initialize state
   const [currentDeviceId, setCurrentDeviceId] = useState<string>('');
@@ -123,12 +124,14 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
 
   //Load player function
   const loadPlayer = async () => {
+    console.log('load player');
     (window as any).onSpotifyWebPlaybackSDKReady = initializePlayer;
     await loadScript({
       defer: true,
       id: 'spotify-player',
       source: 'https://sdk.scdn.co/spotify-player.js',
     });
+    console.log('loaded player');
   };
 
   //Toggle play function
@@ -173,6 +176,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   //set state for current device and devices
   const handlePlayerStatus = async ({ device_id }: any) => {
     const { allDevices } = await initializeDevices(device_id);
+    console.log('alldevices:', allDevices);
     setCurrentDeviceId(device_id);
     setDevices(allDevices);
   };
@@ -253,6 +257,10 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   };
 
   const handlePlayerErrors = (type: string, message: string) => {
+    // if (type === 'authentication_error') {
+    //   if (refresh_token) {
+    //   }
+    // }
     console.log(type);
     console.log(message);
   };
