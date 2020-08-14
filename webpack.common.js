@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -9,6 +10,11 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     publicPath: '/',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.HOST': JSON.stringify('http://localhost:3000'),
+    }),
+  ],
   module: {
     rules: [
       {

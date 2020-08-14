@@ -1,5 +1,6 @@
 import { IPlayOptions } from './types/spotify';
 import { getCookieValue } from './util';
+import axios from 'axios';
 
 const handleExpiredToken = () => {
   const refresh_token = getCookieValue('refresh_token');

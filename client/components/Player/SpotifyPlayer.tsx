@@ -14,7 +14,7 @@ import {
   seek,
   setDevice,
   setVolume,
-} from '../../spotifyPlayerAPI';
+} from '../../playerAPI';
 import TestDashboard from './TestDashboard';
 
 interface SpotifyPlayerProps {

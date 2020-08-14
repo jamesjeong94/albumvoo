@@ -17,7 +17,7 @@ const playerController = {
       },
       method: 'GET',
     })
-      .then((d) => d)
+      .then((data) => res.send(data))
       .catch((err) => {
         console.log(err);
         handleExpiredToken();
@@ -34,7 +34,7 @@ const playerController = {
       },
       method: 'GET',
     })
-      .then((d) => d)
+      .then(({ data }) => res.send(data))
       .catch((err) => {
         console.log(err);
         handleExpiredToken();
@@ -51,11 +51,11 @@ const playerController = {
       },
       method: 'GET',
     })
-      .then((d) => {
-        if (d.status === 204) {
-          return;
+      .then(({ data }) => {
+        if (data.status === 204) {
+          res.send();
         }
-        return d;
+        res.send(data);
       })
       .catch((err) => {
         console.log(err);
@@ -81,7 +81,7 @@ const playerController = {
     const { context_uri, deviceId, uris } = req.body.options;
     const offset = req.body.options.offset ? req.body.options.offset : 0;
     const position_ms = req.body.options.position_ms ? req.body.options.position_ms : 0;
-    const token = req.body.token;
+    const token = req.query.token;
     let body: any;
     if (context_uri) {
       const isArtist = context_uri.indexOf('artist') >= 0;
@@ -110,7 +110,7 @@ const playerController = {
     });
   },
   previous: async (req: Request, res: Response) => {
-    const token = req.body.token;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player/previous`,
       headers: {
@@ -124,7 +124,7 @@ const playerController = {
     });
   },
   next: async (req: Request, res: Response) => {
-    const token = req.body.token;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player/next`,
       headers: {
@@ -138,9 +138,9 @@ const playerController = {
     });
   },
   removeTracks: async (req: Request, res: Response) => {
-    const { tracks, token } = req.body;
+    const { tracks } = req.body;
     const ids = Array.isArray(tracks) ? tracks : [tracks];
-
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/tracks`,
       data: JSON.stringify(ids),
@@ -155,9 +155,9 @@ const playerController = {
     });
   },
   saveTracks: async (req: Request, res: Response) => {
-    const { tracks, token } = req.body;
+    const { tracks } = req.body;
     const ids = Array.isArray(tracks) ? tracks : [tracks];
-
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/tracks`,
       data: JSON.stringify({ ids }),
@@ -173,7 +173,8 @@ const playerController = {
   },
 
   seek: async (req: Request, res: Response) => {
-    const { position, token } = req.body;
+    const { position } = req.body;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player/seek?position_ms=${position}`,
       headers: {
@@ -187,7 +188,8 @@ const playerController = {
     });
   },
   setDevice: async (req: Request, res: Response) => {
-    const { deviceId, token } = req.body;
+    const { deviceId } = req.body;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player`,
       data: JSON.stringify({ device_ids: [deviceId], play: true }),
@@ -202,7 +204,8 @@ const playerController = {
     });
   },
   setVolume: async (req: Request, res: Response) => {
-    const { volume, token } = req.body;
+    const { volume } = req.body;
+    const token = req.query.token;
     return axios({
       url: `https://api.spotify.com/v1/me/player/volume?volume_percent=${volume}`,
       headers: {
