@@ -76,7 +76,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -113,7 +113,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -131,7 +131,7 @@ const playerController = {
       method: 'POST',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -149,7 +149,7 @@ const playerController = {
       method: 'POST',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -170,7 +170,7 @@ const playerController = {
       method: 'DELETE',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -191,7 +191,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -211,7 +211,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -231,7 +231,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);
@@ -250,7 +250,7 @@ const playerController = {
       method: 'PUT',
     })
       .then(({ data }) => {
-        res.status(200);
+        res.sendStatus(200);
       })
       .catch((err) => {
         console.log(err);

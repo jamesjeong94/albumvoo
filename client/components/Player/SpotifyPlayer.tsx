@@ -131,7 +131,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       id: 'spotify-player',
       source: 'https://sdk.scdn.co/spotify-player.js',
     });
-    console.log('loaded player');
   };
 
   //Toggle play function
