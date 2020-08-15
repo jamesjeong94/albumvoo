@@ -17,6 +17,12 @@ html * {
   width: 125px;
 }
 
+.pullTab {
+  left: 0;
+  bottom: 8%;
+  position: absolute;
+}
+
 .SpotifyPlayer {
   display: flex;
   flex-direction: row;

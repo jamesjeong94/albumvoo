@@ -47,7 +47,6 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   const classes = useStyles();
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
-      3
       <div className="leftOfPlayer">
         <p>
           {currentTrack.name} by {currentTrack.artists}

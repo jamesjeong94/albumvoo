@@ -6,6 +6,7 @@ import { getCookieValue } from './util';
 import Header from './components/Header/Header';
 import StreamList from './components/Stream/StreamList';
 import SpotifyPlayerWrapper from './components/Player/SpotifyPlayerWrapper';
+import AlbumPlayer from './components/AlbumPlayer/AlbumPlayer';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
@@ -54,6 +55,7 @@ const App: React.FC = () => {
     <div className="app">
       <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
       <StreamList items={recentAlbums}></StreamList>
+      <AlbumPlayer></AlbumPlayer>
       <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
     </div>
   );
