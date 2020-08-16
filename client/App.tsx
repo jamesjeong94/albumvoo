@@ -6,7 +6,7 @@ import { getCookieValue } from './util';
 import Header from './components/Header/Header';
 import StreamList from './components/Stream/StreamList';
 import SpotifyPlayerWrapper from './components/Player/SpotifyPlayerWrapper';
-import AlbumPlayer from './components/AlbumPlayer/AlbumPlayer';
+import AlbumPlayerWrapper from './components/AlbumPlayer/AlbumPlayerWrapper';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
@@ -46,7 +46,6 @@ const App: React.FC = () => {
       url: 'http://localhost:3000/spotify/recent',
     }).then((response) => {
       let { data } = response;
-      console.log('response', response);
       setRecentAlbums(data);
     });
   };
@@ -55,7 +54,7 @@ const App: React.FC = () => {
     <div className="app">
       <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
       <StreamList items={recentAlbums}></StreamList>
-      <AlbumPlayer></AlbumPlayer>
+      <AlbumPlayerWrapper></AlbumPlayerWrapper>
       <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
     </div>
   );

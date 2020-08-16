@@ -25,7 +25,8 @@ interface AlbumSongListProps {
   currentSong: string;
   elapsedTime: any;
   context: string;
-  setCurrentAlbumTracks: (album: any[]) => void;
+  albumInfo: any;
+  setCurrentAlbumTracks: (album: any[], albumInfo: any) => void;
 }
 
 const theme = createMuiTheme({
@@ -46,12 +47,13 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
   elapsedTime,
   context,
   setCurrentAlbumTracks,
+  albumInfo,
 }) => {
   const [isSongSaved, setSavedSong] = useState<any[]>([]);
   const songIds = songs.map((song) => song.id);
 
   const handleClickForAlbumTracks = () => {
-    setCurrentAlbumTracks(songs);
+    setCurrentAlbumTracks(songs, albumInfo);
   };
 
   const albumSongs = songs.map((song) => {

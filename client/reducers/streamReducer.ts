@@ -1,9 +1,14 @@
-import { PLAY_SONG, SET_CURRENT_ALBUM_TRACKS } from '../constants/streamConstants';
+import {
+  PLAY_SONG,
+  SET_CURRENT_ALBUM_TRACKS,
+  SET_CURRENT_ALBUM_INFO,
+} from '../constants/streamConstants';
 import { PlayerActionTypes } from '../types/player';
 
 const initialState = {
   currentSong: { song: '', context: '', index: 0 },
   albumTracks: [],
+  albumInfo: {},
 };
 
 const streamReducer = (state = initialState, action: PlayerActionTypes) => {
@@ -12,6 +17,11 @@ const streamReducer = (state = initialState, action: PlayerActionTypes) => {
       return {
         ...state,
         currentSong: action.payload,
+      };
+    case SET_CURRENT_ALBUM_INFO:
+      return {
+        ...state,
+        albumInfo: action.payload,
       };
     case SET_CURRENT_ALBUM_TRACKS:
       return {

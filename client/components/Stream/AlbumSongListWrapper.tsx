@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { playSong, setCurrentAlbumTracks } from '../../actions/streamActions';
+import {
+  playSong,
+  setCurrentAlbumTracks,
+  setCurrentAlbumInfo,
+} from '../../actions/streamActions';
 import AlbumSongList from './AlbumSongList';
+import { batch } from 'react-redux';
 
 interface StateProps {
   currentSong: string;
@@ -25,8 +30,11 @@ const mapDispatchToProps = (dispatch: any) => {
     ): void => {
       dispatch(playSong(song_id, context, index, elapsed));
     },
-    setCurrentAlbumTracks: (currentAlbum: any[]) => {
-      dispatch(setCurrentAlbumTracks(currentAlbum));
+    setCurrentAlbumTracks: (currentAlbum: any[], albumInfo: any) => {
+      batch(() => {
+        dispatch(setCurrentAlbumTracks(currentAlbum));
+        dispatch(setCurrentAlbumInfo(albumInfo));
+      });
     },
   };
 };
@@ -35,6 +43,7 @@ interface PropsFromParent {
   songs: any[];
   open: boolean;
   context: string;
+  albumInfo: any;
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -50,6 +59,7 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
   currentSong,
   elapsedTime,
   context,
+  albumInfo,
   setCurrentAlbumTracks,
 }) => {
   return (
@@ -61,6 +71,7 @@ const AlbumSongListWrapper: React.FC<AlbumSongListWrapperProps> = ({
       open={open}
       playThisSong={playThisSong}
       setCurrentAlbumTracks={setCurrentAlbumTracks}
+      albumInfo={albumInfo}
     ></AlbumSongList>
   );
 };

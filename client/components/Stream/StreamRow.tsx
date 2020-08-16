@@ -49,6 +49,7 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
         <TableCell>{item.release_date}</TableCell>
       </TableRow>
       <AlbumSongListWrapper
+        albumInfo={item}
         context={item.uri}
         songs={albumSongs}
         open={open}

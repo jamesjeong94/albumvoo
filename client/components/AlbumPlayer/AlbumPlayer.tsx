@@ -1,9 +1,12 @@
 import Draggable from 'react-draggable';
+import { AlbumInfoType } from '../../types/spotify';
 import React, { useState } from 'react';
 
-interface AlbumPlayerProps {}
+interface AlbumPlayerProps {
+  albumInfo: AlbumInfoType;
+}
 
-const AlbumPlayer: React.FC<AlbumPlayerProps> = ({}) => {
+const AlbumPlayer: React.FC<AlbumPlayerProps> = ({ albumInfo }) => {
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
 
   const handleDrag = (e: any, ui: any) => {
@@ -14,6 +17,7 @@ const AlbumPlayer: React.FC<AlbumPlayerProps> = ({}) => {
     });
   };
 
+  const albumImage = albumInfo.images ? albumInfo.images[0].url : null;
   return (
     <div className="pullTab">
       <Draggable
@@ -25,7 +29,7 @@ const AlbumPlayer: React.FC<AlbumPlayerProps> = ({}) => {
       >
         <div>
           <div className="handle">Drag from here</div>
-          <div>This readme is really dragging on...</div>
+          <img src={albumImage}></img>
         </div>
       </Draggable>
     </div>
