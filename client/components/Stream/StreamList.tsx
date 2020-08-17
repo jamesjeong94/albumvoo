@@ -7,11 +7,14 @@ import TableContainer from '@material-ui/core/TableContainer';
 import { TableHead } from '@material-ui/core';
 import TablePagination from '@material-ui/core/TablePagination';
 
+import { AlbumInfoType } from '../../types/spotify';
+
 interface StreamListProps {
   items: any[];
+  albumInfo: AlbumInfoType;
 }
 
-const StreamList: React.FC<StreamListProps> = ({ items }) => {
+const StreamList: React.FC<StreamListProps> = ({ items, albumInfo }) => {
   const [page, setPage] = useState(0);
 
   const setNewPage = (event: any, newPage: any) => {
@@ -20,8 +23,26 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
   const streamRows = items.slice(10 * page, 10 * (page + 1)).map((item) => {
     return <StreamRow key={item.id} item={item}></StreamRow>;
   });
+
+  const image = albumInfo.images ? albumInfo.images[0].url : null;
+  const backgroundImage = image
+    ? {
+        position: 'absolute' as 'absolute',
+        backgroundImage: `url(${image})`,
+        filter: 'blur(8px)',
+        height: '100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        zIndex: -1,
+        backgroundSize: '100%',
+        opacity: 0.5,
+        width: '100%',
+      }
+    : {};
+
   return (
     <div className="StreamList">
+      <div style={backgroundImage}></div>
       <TableContainer>
         <Table stickyHeader>
           <colgroup>

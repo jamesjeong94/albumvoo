@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
-import AlbumPlayer from './AlbumPlayer';
+import StreamList from './StreamList';
 import { AlbumInfoType } from '../../types/spotify';
 
 interface StateProps {
@@ -14,16 +14,17 @@ const mapStateToProps = (state: any): StateProps => {
   };
 };
 
+interface PropsFromParent {
+  items: any[];
+}
 const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-interface PropsFromParent {}
+type StreamListWrapperProps = PropsFromRedux & PropsFromParent;
 
-type AlbumPlayerWrapperProps = PropsFromRedux & PropsFromParent;
-
-const AlbumPlayerWrapper: React.FC<AlbumPlayerWrapperProps> = ({ albumInfo }) => {
-  return <AlbumPlayer albumInfo={albumInfo}></AlbumPlayer>;
+const StreamListWrapper: React.FC<StreamListWrapperProps> = ({ items, albumInfo }) => {
+  return <StreamList items={items} albumInfo={albumInfo}></StreamList>;
 };
 
-export = connector(AlbumPlayerWrapper);
+export = connector(StreamListWrapper);

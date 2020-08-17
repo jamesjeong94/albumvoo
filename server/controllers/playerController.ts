@@ -2,7 +2,9 @@ import { IPlayOptions } from '../types/playerTypes';
 import { Response, Request } from 'express';
 import axios from 'axios';
 
-const handleExpiredToken = () => {};
+const handleExpiredToken = (req: Request, res: Response) => {
+  res.sendStatus(401);
+};
 
 const playerController = {
   checkTracksStatus: async (req: Request, res: Response) => {
@@ -20,7 +22,7 @@ const playerController = {
       .then((data) => res.send(data))
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
 
@@ -40,7 +42,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
 
@@ -62,7 +64,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   pause: async (req: Request, res: Response) => {
@@ -80,7 +82,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
 
@@ -117,7 +119,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   previous: async (req: Request, res: Response) => {
@@ -135,7 +137,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   next: async (req: Request, res: Response) => {
@@ -153,7 +155,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   removeTracks: async (req: Request, res: Response) => {
@@ -174,7 +176,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   saveTracks: async (req: Request, res: Response) => {
@@ -195,7 +197,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
 
@@ -215,7 +217,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   setDevice: async (req: Request, res: Response) => {
@@ -235,7 +237,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
   setVolume: async (req: Request, res: Response) => {
@@ -254,7 +256,7 @@ const playerController = {
       })
       .catch((err) => {
         console.log(err);
-        handleExpiredToken();
+        handleExpiredToken(req, res);
       });
   },
 };

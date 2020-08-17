@@ -4,9 +4,9 @@ import axios from 'axios';
 import { getCookieValue } from './util';
 
 import Header from './components/Header/Header';
-import StreamList from './components/Stream/StreamList';
 import SpotifyPlayerWrapper from './components/Player/SpotifyPlayerWrapper';
 import AlbumPlayerWrapper from './components/AlbumPlayer/AlbumPlayerWrapper';
+import StreamListWrapper from './components/Stream/StreamListWrapper';
 
 const App: React.FC = () => {
   const [userInfo, setUserInfo] = useState<Object>({ user: null });
@@ -21,24 +21,24 @@ const App: React.FC = () => {
     return config;
   });
 
-  const getUserData = () => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:3000/spotify/user',
-    }).then(({ data }) => {
-      setUserInfo(data);
-    });
-  };
+  // const getUserData = () => {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:3000/spotify/user',
+  //   }).then(({ data }) => {
+  //     setUserInfo(data);
+  //   });
+  // };
 
-  const getTopOfUser = (type: string) => {
-    axios({
-      method: 'get',
-      url: 'http://localhost:3000/spotify/top',
-      params: { type: type },
-    }).then(({ data }) => {
-      setTopArtists(data.items);
-    });
-  };
+  // const getTopOfUser = (type: string) => {
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://localhost:3000/spotify/top',
+  //     params: { type: type },
+  //   }).then(({ data }) => {
+  //     setTopArtists(data.items);
+  //   });
+  // };
 
   const getRecentByTopArtists = () => {
     axios({
@@ -53,7 +53,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
-      <StreamList items={recentAlbums}></StreamList>
+      <StreamListWrapper items={recentAlbums}></StreamListWrapper>
       <AlbumPlayerWrapper></AlbumPlayerWrapper>
       <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
     </div>

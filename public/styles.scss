@@ -31,6 +31,8 @@ html {
   align-items: center;
   top: 88%;
   position: absolute;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .SpotifyPlayer {
