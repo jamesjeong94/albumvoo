@@ -5,7 +5,7 @@ import { AlbumInfoType } from '../../types/spotify';
 import AlbumPlayer from './AlbumPlayer';
 
 interface StateProps {
-  albumInfo: any;
+  albumInfo: AlbumInfoType;
 }
 
 const mapStateToProps = (state: any): StateProps => {

@@ -62,12 +62,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   const [currentDeviceId, setCurrentDeviceId] = useState<string>('');
   const [devices, setDevices] = useState([]);
   const [error, setError] = useState('');
-  const [errorType, setErrorType] = useState('');
-  const [isActive, setIsActive] = useState(false);
-  const [isInitializing, setIsInitializing] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [status, setStatus] = useState('STATUS.IDLE');
   const [track, setTrack] = useState(emptyTrack);
   const [volume, setVolumeOnDashboard] = useState(0.75);
   const [autoPlay, setAutoPlay] = useState<boolean>(false);
@@ -175,7 +171,6 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   //set state for current device and devices
   const handlePlayerStatus = async ({ device_id }: any) => {
     const { allDevices } = await initializeDevices(device_id);
-    console.log('alldevices:', allDevices);
     setCurrentDeviceId(device_id);
     setDevices(allDevices);
   };

@@ -28,6 +28,7 @@ html * {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   left: 0;
   bottom: 0;
   position: absolute;
@@ -35,9 +36,20 @@ html * {
   clear: both;
   height: 8%;
   .leftOfPlayer {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    padding: 0 0 0 10px;
+    border: 1px solid black;
+    left: 10px;
+    .dashboard-info {
+      margin-right: auto;
+    }
   }
   .middleOfPlayer {
     display: flex;
+    flex: 1;
+    justify-content: center;
     flex-direction: column;
     .topOfMiddle {
       display: flex;
@@ -51,15 +63,30 @@ html * {
     }
   }
   .rightOfPlayer {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    .dashboard-volume {
+      margin-left: auto;
+    }
   }
 }
 
 .logo {
-  width: 10%;
+  width: 300px;
 }
 
 .Header {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.iconFill {
+  fill: #0048ff;
+}
+
+.centerText {
+  text-align: center;
+  padding: 0 5px 0 5px;
 }

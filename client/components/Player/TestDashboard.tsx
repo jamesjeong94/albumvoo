@@ -6,6 +6,7 @@ import {
   PlayCircleOutlineRounded,
   NavigateBeforeRounded,
   NavigateNextRounded,
+  LoopRounded,
 } from '@material-ui/icons';
 
 interface TestDashboardProps {
@@ -28,6 +29,10 @@ const useStyles = makeStyles({
     minWidth: '200px',
     maxWidth: '40vh',
   },
+  iconFill: {
+    fill: '#0048ff',
+  },
+  noFill: {},
 });
 
 const TestDashboard: React.FC<TestDashboardProps> = ({
@@ -45,12 +50,16 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   handlePlaybackSliderChange,
 }) => {
   const classes = useStyles();
+
+  const autoPlayStyle = autoPlay ? classes.iconFill : classes.noFill;
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
       <div className="leftOfPlayer">
-        <p>
-          {currentTrack.name} by {currentTrack.artists}
-        </p>
+        <div className="dashboard-info">
+          <p>
+            {currentTrack.name} by {currentTrack.artists}
+          </p>
+        </div>
       </div>
       <div className="middleOfPlayer">
         <div className="topOfMiddle">
@@ -71,22 +80,15 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
           >
             <NavigateNextRounded></NavigateNextRounded>
           </IconButton>
-          <FormControlLabel
-            value="end"
-            control={
-              <Checkbox
-                checked={autoPlay}
-                onChange={handleAutoPlay}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-              />
-            }
-            label="Autoplay"
-            labelPlacement="end"
-          />
-        </div>{' '}
+          <IconButton onClick={handleAutoPlay}>
+            <LoopRounded className={autoPlayStyle}></LoopRounded>
+          </IconButton>
+        </div>
         <div className="bottomOfMiddle">
-          <div>{timeToReadable(currentTime)}</div>
-          <div>
+          <div className="centerText">
+            <p>{timeToReadable(currentTime)}</p>
+          </div>
+          <div className="centerText">
             <Slider
               className={classes.playback}
               value={(currentTime * 100) / totalTime}
@@ -96,20 +98,24 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
               }}
             />
           </div>
-          <div>{timeToReadable(totalTime)}</div>
+          <div className="centerText">
+            <p>{timeToReadable(totalTime)}</p>
+          </div>
         </div>
       </div>
-      <div className="leftOfPlayer">
-        <div className="VolumeSlider">
-          <Slider
-            defaultValue={volume}
-            value={volume}
-            onChange={() => {}}
-            onChangeCommitted={(event, newValue) => {
-              handleVolumeChange(newValue);
-            }}
-            aria-labelledby="continuous-slider"
-          ></Slider>
+      <div className="rightOfPlayer">
+        <div className="dashboard-volume">
+          <div className="VolumeSlider">
+            <Slider
+              defaultValue={volume}
+              value={volume}
+              onChange={() => {}}
+              onChangeCommitted={(event, newValue) => {
+                handleVolumeChange(newValue);
+              }}
+              aria-labelledby="continuous-slider"
+            ></Slider>
+          </div>
         </div>
       </div>
     </div>
