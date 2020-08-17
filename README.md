@@ -36,7 +36,3 @@ This application serves as a spotify-portal where users can see their favorite a
 #### As a user, I want to be suggest artists/music that sound similar to ones I listen to
 
 - Aggregate data from multiple sources (recent songs of related artists to top K artists)
-
-### Ticketing
-
-https://trello.com/b/eiSRdhuE/albumvoo

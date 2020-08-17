@@ -51,12 +51,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app">
+    <>
       <Header getRecentByTopArtists={getRecentByTopArtists}></Header>
-      <StreamListWrapper items={recentAlbums}></StreamListWrapper>
-      <AlbumPlayerWrapper></AlbumPlayerWrapper>
-      <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
-    </div>
+      <div className="content">
+        <StreamListWrapper items={recentAlbums}></StreamListWrapper>
+        <AlbumPlayerWrapper></AlbumPlayerWrapper>
+        <SpotifyPlayerWrapper></SpotifyPlayerWrapper>
+      </div>
+    </>
   );
 };
 
