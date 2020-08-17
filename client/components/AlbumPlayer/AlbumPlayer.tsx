@@ -21,17 +21,17 @@ const AlbumPlayer: React.FC<AlbumPlayerProps> = ({ albumInfo }) => {
 
   const handleDragEnd = () => {
     const { x, y } = deltaPosition;
-    // if (y > -200) {
-    //   setDeltaPosition({
-    //     x: 0,
-    //     y: -300,
-    //   });
-    // } else {
-    //   setDeltaPosition({
-    //     x: 0,
-    //     y: 0,
-    //   });
-    // }
+    if (y < -400) {
+      setDeltaPosition({
+        x: 0,
+        y: -900,
+      });
+    } else {
+      setDeltaPosition({
+        x: 0,
+        y: 0,
+      });
+    }
     console.log('hello', x, y);
   };
 
@@ -45,6 +45,7 @@ const AlbumPlayer: React.FC<AlbumPlayerProps> = ({ albumInfo }) => {
         position={{ x: deltaPosition.x, y: deltaPosition.y }}
         onDrag={handleDrag}
         onStop={handleDragEnd}
+        bounds={{ bottom: 0, top: -900 }}
       >
         <div>
           <div className="handle">

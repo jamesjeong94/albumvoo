@@ -11,7 +11,7 @@ const StreamHeader: React.FC<StreamHeaderProps> = ({}) => {
       <TableCell>Cover</TableCell>
       <TableCell>Album</TableCell>
       <TableCell>Artist</TableCell>
-      <TableCell>Release Date</TableCell>
+      <TableCell>Released</TableCell>
     </TableRow>
   );
 };

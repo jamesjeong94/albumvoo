@@ -11,6 +11,7 @@ const mapStateToProps = (state: any) => {
     index: state.stream.currentSong.index,
     albumTracks: state.stream.albumTracks,
     elapsedTime: state.player.elapsedTime,
+    albumInfo: state.stream.albumInfo,
   };
 };
 
@@ -44,6 +45,7 @@ const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({
   index,
   albumTracks,
   playThisSong,
+  albumInfo,
 }) => {
   return (
     <SpotifyPlayer
@@ -54,6 +56,7 @@ const SpotifyPlayerWrapper: React.FC<SpotifyPlayerWrapperProps> = ({
       albumTracks={albumTracks}
       playThisSong={playThisSong}
       elapsedTime={elapsedTime}
+      albumInfo={albumInfo}
     ></SpotifyPlayer>
   );
 };

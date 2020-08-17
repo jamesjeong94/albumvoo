@@ -8,6 +8,8 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 import AlbumSongListWrapper from './AlbumSongListWrapper';
 
+import { getRelativeTime } from '../../util';
+
 interface StreamRowProps {
   item: any;
 }
@@ -25,7 +27,8 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
     });
   };
 
-  let imgUrl = item.images.length > 0 ? item.images[item.images.length - 1].url : null;
+  const imgUrl = item.images.length > 0 ? item.images[item.images.length - 1].url : null;
+  const relativeTime = getRelativeTime(item.release_date);
   return (
     <React.Fragment>
       <TableRow>
@@ -46,7 +49,7 @@ const StreamRow: React.FC<StreamRowProps> = ({ item }) => {
         </TableCell>
         <TableCell>{item.name}</TableCell>
         <TableCell>{item.artists[0].name}</TableCell>
-        <TableCell>{item.release_date}</TableCell>
+        <TableCell>{relativeTime}</TableCell>
       </TableRow>
       <AlbumSongListWrapper
         albumInfo={item}

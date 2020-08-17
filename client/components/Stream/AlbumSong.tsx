@@ -4,6 +4,7 @@ import { TableRow, TableCell, IconButton, Icon } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import FavoriteWidget from './FavoriteWidget';
 import { PlayCircleOutline } from '@material-ui/icons';
+import { timeToReadable } from '../../util';
 
 interface AlbumSongProps {
   playThisSong: (
@@ -64,7 +65,7 @@ const AlbumSong: React.FC<AlbumSongProps> = ({
     }, [])
     .join(', ');
 
-  let duration = moment.utc(info.duration_ms).format('mm:ss');
+  let duration = timeToReadable(info.duration_ms);
 
   const handleMouseEnter = () => {
     toggleIsHovered(true);

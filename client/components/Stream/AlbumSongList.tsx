@@ -76,7 +76,14 @@ const AlbumSongList: React.FC<AlbumSongListProps> = ({
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
+                <colgroup>
+                  <col style={{ width: '10%' }} />
+                  <col style={{ width: '10%' }} />
+                  <col style={{ width: '40%' }} />
+                  <col style={{ width: '20%' }} />
+                  <col style={{ width: '20%' }} />
+                </colgroup>
                 <TableHead>
                   <TableRow>
                     <TableCell align={'center'}>

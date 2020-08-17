@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getCookieValue, loadScript } from '../../util';
 //prettier-ignore
 import {
-  IWebPlaybackError,IWebPlaybackImage,IWebPlaybackAlbum,IWebPlaybackArtist,IWebPlaybackState
+  IWebPlaybackError,IWebPlaybackImage,IWebPlaybackAlbum,IWebPlaybackArtist,IWebPlaybackState, AlbumInfoType
 } from '../../types/spotify';
 import {
   getDevices,
@@ -16,6 +16,7 @@ import {
   setVolume,
 } from '../../playerAPI';
 import TestDashboard from './TestDashboard';
+import { AlbumSongType } from '../../types/player';
 
 interface SpotifyPlayerProps {
   song: string;
@@ -30,6 +31,7 @@ interface SpotifyPlayerProps {
     index: number,
     elapsed: number
   ) => void;
+  albumInfo: AlbumInfoType;
 }
 
 var player: any;
@@ -44,6 +46,7 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
   setCurrentElapsed,
   index,
   albumTracks,
+  albumInfo,
 }) => {
   //initialize constants
   const progressUpdateInterval = 75;
@@ -325,6 +328,8 @@ const SpotifyPlayer: React.FC<SpotifyPlayerProps> = ({
       handleAutoPlay={handleAutoPlay}
       setCurrentElapsed={setCurrentElapsed}
       handlePlaybackSliderChange={handlePlaybackSliderChange}
+      albumInfo={albumInfo}
+      isPlaying={isPlaying}
     ></TestDashboard>
   );
 };

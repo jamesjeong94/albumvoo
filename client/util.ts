@@ -45,5 +45,9 @@ export function loadScript(attributes: IScriptAttributes): Promise<any> {
 }
 
 export const timeToReadable = (duration: number) => {
-  return moment.utc(duration).format('mm:ss');
+  return moment.utc(duration).format('m:ss');
+};
+
+export const getRelativeTime = (time: string) => {
+  return moment(time).fromNow();
 };

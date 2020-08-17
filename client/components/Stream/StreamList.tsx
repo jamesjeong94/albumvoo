@@ -24,6 +24,13 @@ const StreamList: React.FC<StreamListProps> = ({ items }) => {
     <div className="StreamList">
       <TableContainer>
         <Table stickyHeader>
+          <colgroup>
+            <col style={{ width: '10%' }} />
+            <col style={{ width: '10%' }} />
+            <col style={{ width: '40%' }} />
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '20%' }} />
+          </colgroup>
           <TableHead>
             <StreamHeader></StreamHeader>
           </TableHead>

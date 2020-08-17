@@ -6,7 +6,9 @@ import {
   NavigateBeforeRounded,
   NavigateNextRounded,
   LoopRounded,
+  PauseCircleOutlineRounded,
 } from '@material-ui/icons';
+import { AlbumInfoType } from '../../types/spotify';
 
 import CurrentlyPlayingPanel from './CurrentlyPlayingPanel';
 import { timeToReadable } from '../../util';
@@ -24,6 +26,8 @@ interface TestDashboardProps {
   handleAutoPlay: () => void;
   setCurrentElapsed: (elaspedTime: number) => void;
   handlePlaybackSliderChange: (position: number) => void;
+  albumInfo: AlbumInfoType;
+  isPlaying: boolean;
 }
 
 const useStyles = makeStyles({
@@ -50,8 +54,16 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   handleAutoPlay,
   setCurrentElapsed,
   handlePlaybackSliderChange,
+  albumInfo,
+  isPlaying,
 }) => {
   const classes = useStyles();
+
+  const showPlayOrPauseBtn = isPlaying ? (
+    <PauseCircleOutlineRounded></PauseCircleOutlineRounded>
+  ) : (
+    <PlayCircleOutlineRounded></PlayCircleOutlineRounded>
+  );
 
   const autoPlayStyle = autoPlay ? classes.iconFill : classes.noFill;
   return (
@@ -60,10 +72,12 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
         <CurrentlyPlayingPanel
           name={currentTrack.name}
           artists={currentTrack.artists}
+          albumInfo={albumInfo}
         ></CurrentlyPlayingPanel>
       </div>
       <div className="middleOfPlayer">
         <div className="topOfMiddle">
+          <div style={{ padding: '24px' }}></div>
           <IconButton
             onClick={() => {
               handleClickPrevious();
@@ -71,9 +85,7 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
           >
             <NavigateBeforeRounded></NavigateBeforeRounded>
           </IconButton>
-          <IconButton onClick={togglePlay}>
-            <PlayCircleOutlineRounded></PlayCircleOutlineRounded>
-          </IconButton>
+          <IconButton onClick={togglePlay}>{showPlayOrPauseBtn}</IconButton>
           <IconButton
             onClick={() => {
               handleClickNext();
