@@ -1,5 +1,4 @@
 import React from 'react';
-import { timeToReadable } from '../../util';
 import { Slider, Checkbox, FormControlLabel, IconButton } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -8,6 +7,9 @@ import {
   NavigateNextRounded,
   LoopRounded,
 } from '@material-ui/icons';
+
+import CurrentlyPlayingPanel from './CurrentlyPlayingPanel';
+import { timeToReadable } from '../../util';
 
 interface TestDashboardProps {
   togglePlay: () => void;
@@ -55,11 +57,10 @@ const TestDashboard: React.FC<TestDashboardProps> = ({
   return (
     <div className="SpotifyPlayer" style={{ border: '1px solid black' }}>
       <div className="leftOfPlayer">
-        <div className="dashboard-info">
-          <p>
-            {currentTrack.name} by {currentTrack.artists}
-          </p>
-        </div>
+        <CurrentlyPlayingPanel
+          name={currentTrack.name}
+          artists={currentTrack.artists}
+        ></CurrentlyPlayingPanel>
       </div>
       <div className="middleOfPlayer">
         <div className="topOfMiddle">
